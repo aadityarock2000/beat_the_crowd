@@ -1,6 +1,4 @@
 import pandas as pd
-fares = pd.read_csv('raw_data\\Consumer_Airfare_Report__Table_7_-_Fare_Premiums_for_Select_Cities_with_More_Than_20_Passengers_per_Day.csv')
-delay_cause = pd.read_csv('raw_data\\Airline_Delay_Cause_2003_2022.csv')
 denied_boarding = pd.read_csv('raw_data\\Denied-Confirmed-Space-2021-Marketing-Carrier-Q1.csv')
 denied_boarding = denied_boarding.iloc[:][1:20] # remove column definitions
 denied_boarding.columns = ['carrier', 
@@ -31,12 +29,5 @@ denied_boarding.columns = ['carrier',
 denied_boarding['year'] = 2021
 denied_boarding['quarter'] = 1
 
-delay_cause['quarter'] = (delay_cause['month']-1)//3 + 1
 
-denied_and_delayed_flights_quarterly = delay_cause.merge(denied_boarding, on = ['year', 'quarter'], how = 'left')
-
-fares_denied_and_delayed_flights_quarterly = denied_and_delayed_flights_quarterly.merge(fares, on = ['year', 'quarter'], how = 'left')
-
-denied_and_delayed_flights_quarterly.to_csv('clean_data\\denied_and_delayed_flights_quarterly.csv')
-flight_data_raw = pd.read_csv('raw_data\\Detailed_Statistics_Departures.csv')
 
