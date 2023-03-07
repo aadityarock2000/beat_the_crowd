@@ -1,7 +1,14 @@
+'''
+This is the application that can be used to interact with the analysis and the pipeline created.
+'''
+import datetime
+
 import streamlit as st
 import numpy as np
 import pandas as pd
-import datetime
+
+from website_utils import departure_input_data
+
 
 st.set_page_config(
      page_title="Beat The Crowd",
@@ -46,30 +53,37 @@ with tabs[1]:
     st.write('Select your data of interest and the file format that you require')
 
     # Define the list of airports
-    airports = ['New York (JFK)', 'Los Angeles (LAX)', 'Chicago (ORD)', 'Dallas (DFW)', 'Miami (MIA)', 'San Francisco (SFO)', 'Seattle (SEA)', 'Washington DC (IAD)']
-    
+    airports=departure_input_data.airport_list()
     col1, col2= st.columns(2)
 
     with col1:
         # Create searchable dropdowns for the source airport and destination airport
         source_airport = st.selectbox('Source Airport', options=airports, index=0)
         from_date = st.date_input('From', datetime.date.today() + datetime.timedelta(days=365))
+        file_format=st.selectbox('File Format',options=departure_input_data.file_types(), index=0)
 
     with col2:
         # Create input fields for the date range
         destination_airport = st.selectbox('Destination Airport', options=airports, index=1)
         to_date = st.date_input('To', datetime.date.today())
-
-    file_format=st.selectbox('File Format',options=['Excel', 'CSV', 'MS SQL DB'], index=0)
+        carrier=st.selectbox('Airline Carrier',options=departure_input_data.carrier_list(),index=0)
 
 
     dummy1, dummy2,dummy3=st.columns([4,5,1])
     with dummy2:
         if st.button('Search Flights'):
-            # Process the user's inputs and display the results
             st.write('Processing your search...')
+            #send the data to a function to process
+            inputs={source_airport:source_airport,
+                    from_date:from_date,
+                    file_format:file_format,
+                    destination_airport:destination_airport,
+                    to_date:to_date,
+                    carrier:carrier
+                    }
 
-    
+
+
     
 
 
