@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import datetime
 
 st.set_page_config(
      page_title="Beat The Crowd",
@@ -26,7 +27,8 @@ With a focus on user experience, SmoothFly aims to alleviate the stress and unce
 """)
 
 #dfferent tabs for different tasks
-tab_titles=["ReadMe", "Get your Own Data - The pipeline", "Analysis - Question 1", "Analysis - Question 2","Insights"]
+tab_titles=["ReadMe", "Get your Own Data - The Pipeline", "Analysis - Question 1",
+            "Analysis - Question 2","Insights"]
 tabs=st.tabs(tab_titles)
 
 with tabs[0]:
@@ -39,5 +41,40 @@ with tabs[0]:
     We give you the option to work on multiple fire formats like Excel, CSV and SQL Database.
     
     """)
+with tabs[1]:
+    st.title('Flight Search')
+    st.write('Enter your travel details below:')
+
+    # Define the list of airports
+    airports = ['New York (JFK)', 'Los Angeles (LAX)', 'Chicago (ORD)', 'Dallas (DFW)', 'Miami (MIA)', 'San Francisco (SFO)', 'Seattle (SEA)', 'Washington DC (IAD)']
+    
+    col1, col2= st.columns(2)
+
+    with col1:
+        # Create searchable dropdowns for the source airport and destination airport
+        source_airport = st.selectbox('Source Airport', options=airports, index=0)
+        from_date = st.date_input('From', datetime.date.today() + datetime.timedelta(days=365))
+
+    with col2:
+        # Create input fields for the date range
+        destination_airport = st.selectbox('Destination Airport', options=airports, index=1)
+        to_date = st.date_input('To', datetime.date.today())
 
 
+
+    dummy1, dummy2,dummy3=st.columns(3)
+    with dummy2:
+        if st.button('Search Flights'):
+            # Process the user's inputs and display the results
+            st.write('Processing your search...')
+
+    
+
+
+
+
+
+    # Print the user's inputs
+    st.write('You entered:')
+    st.write(f'Source Airport: {source_airport}')
+    st.write(f'Destination Airport: {destination_airport}')
