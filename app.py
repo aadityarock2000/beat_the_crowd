@@ -43,7 +43,7 @@ with tabs[0]:
     """)
 with tabs[1]:
     st.title('Flight Search')
-    st.write('Enter your travel details below:')
+    st.write('Select your data of interest and the file format that you require')
 
     # Define the list of airports
     airports = ['New York (JFK)', 'Los Angeles (LAX)', 'Chicago (ORD)', 'Dallas (DFW)', 'Miami (MIA)', 'San Francisco (SFO)', 'Seattle (SEA)', 'Washington DC (IAD)']
@@ -60,21 +60,23 @@ with tabs[1]:
         destination_airport = st.selectbox('Destination Airport', options=airports, index=1)
         to_date = st.date_input('To', datetime.date.today())
 
+    file_format=st.selectbox('File Format',options=['Excel', 'CSV', 'MS SQL DB'], index=0)
 
 
-    dummy1, dummy2,dummy3=st.columns(3)
+    dummy1, dummy2,dummy3=st.columns([4,5,1])
     with dummy2:
         if st.button('Search Flights'):
             # Process the user's inputs and display the results
             st.write('Processing your search...')
 
     
+    
 
 
 
 
 
-    # Print the user's inputs
-    st.write('You entered:')
-    st.write(f'Source Airport: {source_airport}')
-    st.write(f'Destination Airport: {destination_airport}')
+    # # Print the user's inputs
+    # st.write('You entered:')
+    # st.write(f'Source Airport: {source_airport}')
+    # st.write(f'Destination Airport: {destination_airport}')
