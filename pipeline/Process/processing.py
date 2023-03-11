@@ -1,3 +1,6 @@
+import os
+import pandas as pd
+
 """
 This function takes two arguments: name and csv. The csv argument is expected to be a Pandas
 DataFrame object containing flight data. The name argument is a string representing the name 
@@ -77,3 +80,11 @@ def process_csv(name, csv):
     del csv['Delay Late Aircraft Arrival (Minutes)']
 
     return csv[(csv['flightNumber'] != 'Flight Number')]
+
+def processing_main():
+    path = 'dc/'
+    fileList = os.listdir(path)
+    for file in fileList:
+        csv = pd.read_csv('dc/'+file)
+        csv = process_csv(file,csv)
+        break
