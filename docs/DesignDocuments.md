@@ -49,9 +49,8 @@ Inputs (with type information):
 * Origin and Destination City that is inputted by the user 
 * Factor of interest that is chosen by the user: Delay, Price, or Denied Boarding
 * Subset of data from the data manager based on the origin and destination cities 
-<br>
 Outputs (with type information): Plots depicting the impact of different factors such as seasonality or airline on chosen focus point<br>
-Assumptions: user input is valid and exists in the dataset 
+Assumptions: user input is valid and exists in the dataset  <br>
 How it uses other components: This component takes in information from the user interface and uses that input to obtain a subset of data from the datamanager. This component will interact with the data pipeline and Data manager based on the visualization required.<br>
 <br>
 Name: Web App<br>
@@ -61,6 +60,7 @@ Outputs (with type information): The output of webapp is either visualization or
 Assumptions: The user has basic knowledge of how to use the internet and access a website.<br>
 How it uses other components: The webapp will interact with the user and take input from the user. This input will then be forwarded to the data manager or pipeline manager based on the use-case. It will then take the output from the data manager or pipeline manager and display it to the user and send it as a downloadable file.
 <br>
+
 ### Interactions to accomplish use cases. 
 A user will enter input into the web app in the form of an origin city and destination and they will select what they are interested in visualizing: delays, denied boarding, or fares.
 The data manager confirms that the user input exists in the dataset and outputs a subset of data for that origin and destination city. 
