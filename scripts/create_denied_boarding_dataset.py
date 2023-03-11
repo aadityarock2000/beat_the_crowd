@@ -6,7 +6,7 @@ denied_board_dfs = list()
 # read in data that uses new reporting method - excel sheet with sheet for each quarter 
 for year in years: 
     for quarter in quarters:
-        file_path = "..\\Analysis\\raw_data\\denied_boarding\\Denied-Confirmed-Space-" + year + "-Operating-Carrier.xlsx"
+        file_path = "C:\\Users\\franc\\beat_the_crowd\\beat_the_crowd\\Analysis\\raw_data\\denied_boarding\\Denied-Confirmed-Space-" + year + "-Operating-Carrier.xlsx"
         sheet = quarter + year
         df = pd.read_excel(file_path, sheet_name=sheet, header = 2)
         
@@ -49,4 +49,4 @@ denied_boarding.loc[denied_boarding.CARRIER == 'Alaska Airlines Codeshare', 'CAR
 denied_boarding.loc[denied_boarding.CARRIER == 'Republic Airways', 'CARRIER']= 'Republic Airline'
 denied_boarding.loc[denied_boarding.CARRIER == 'United Airlines', 'CARRIER'] = 'United Air Lines'
 
-denied_boarding.to_csv("..\\Analysis\\clean_data\\denied_boarding.csv")
+denied_boarding.to_csv("..\\Analysis\\clean_data\\denied_boarding.csv", index = False)
