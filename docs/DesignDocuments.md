@@ -49,6 +49,7 @@ Inputs (with type information):
 * Origin and Destination City that is inputted by the user 
 * Factor of interest that is chosen by the user: Delay, Price, or Denied Boarding
 * Subset of data from the data manager based on the origin and destination cities 
+
 Outputs (with type information): Plots depicting the impact of different factors such as seasonality or airline on chosen focus point<br>
 Assumptions: user input is valid and exists in the dataset  <br>
 How it uses other components: This component takes in information from the user interface and uses that input to obtain a subset of data from the datamanager. This component will interact with the data pipeline and Data manager based on the visualization required.<br>
