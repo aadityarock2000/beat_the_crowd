@@ -105,7 +105,6 @@ def db_plot_denial_type_by_carrier():
                                   'variable',
                                   'value']].set_index(['CARRIER', 'variable'])['value']
 
-    # create a figure for each category
     figs = {
         c: px.pie(denied_boarding_reshape.loc[c].reset_index(), values="value", names="variable",
                   labels = {
@@ -118,14 +117,12 @@ def db_plot_denial_type_by_carrier():
         for c in denied_boarding_reshape.index.get_level_values("CARRIER").unique()
     }
 
-    # integrate figures per category into one figure
     defaultcat = denied_boarding_reshape.index.get_level_values("CARRIER").unique()[0]
     fig = figs[defaultcat].update_traces(visible=True)
     for k in figs.keys():
         if k != defaultcat:
             fig.add_traces(figs[k].data)
 
-    # finally build dropdown menu
     fig.update_layout(
         updatemenus=[
             {
@@ -163,7 +160,6 @@ def db_plot_denied_compensation_reason():
                                                        'value']].set_index(['CARRIER', 
                                                                             'variable'])['value']
 
-    # create a figure for each category
     figs = {
     c: px.pie(denied_boarding_reshape.loc[c].reset_index(), values="value", names="variable",
               labels = {
@@ -177,7 +173,6 @@ def db_plot_denied_compensation_reason():
     for c in denied_boarding_reshape.index.get_level_values("CARRIER").unique()
     }
 
-    # integrate figures per category into one figure
     defaultcat = denied_boarding_reshape.index.get_level_values("CARRIER").unique()[0]
     fig = figs[defaultcat].update_traces(visible=True)
     for k in figs.keys():
@@ -202,7 +197,6 @@ def db_plot_denied_compensation_reason():
                 font = {"size": 10},
                 yshift=10)
 
-# finally build dropdown menu
     fig.update_layout(
     updatemenus=[
         {
