@@ -82,9 +82,12 @@ def process_csv(name, csv):
     return csv[(csv['flightNumber'] != 'Flight Number')]
 
 def processing_main():
-    path = 'dc/'
+    path = '../../data/pipeline_data'
     fileList = os.listdir(path)
     for file in fileList:
-        csv = pd.read_csv('dc/'+file)
+        csv = pd.read_csv(path+'/'+file)
         csv = process_csv(file,csv)
+        print(csv)
         break
+
+processing_main()
