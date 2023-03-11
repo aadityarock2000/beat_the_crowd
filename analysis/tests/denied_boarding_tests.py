@@ -31,7 +31,8 @@ class TestDeniedBoarding(unittest.TestCase):
     def test_plot_smoke(self):
         denied_boarding.db_plot_denied_compensation_reason()
         self.assertTrue(True)
-
+        
+    
            
   
 if __name__ == '__main__':

@@ -4,7 +4,6 @@ import plotly.io as pio
 import plotly.graph_objects as go
 pio.templates.default = "plotly_dark"
 
-
 def db_plot_perc_denied_over_time():
     denied_boarding = pd.read_csv("C:\\Users\\franc\\beat_the_crowd\\beat_the_crowd\\Analysis\\clean_data\\denied_boarding.csv")
     fig = px.area(denied_boarding.groupby('date').mean(numeric_only = True).reset_index().rename(columns = {'perc_denied_boarding_involuntary':"Involuntary", "perc_denied_boarding_voluntary":"Voluntary"}), 
@@ -41,7 +40,7 @@ def db_plot_perc_denied_by_carrier():
 def db_plot_total_denied_by_carrier():
     denied_boarding = pd.read_csv("C:\\Users\\franc\\beat_the_crowd\\beat_the_crowd\\Analysis\\clean_data\\denied_boarding.csv")
     fig = px.scatter(denied_boarding.groupby('CARRIER').sum(numeric_only=True).reset_index(), 
-                 x=6, y="total_denials",
+                 x='6', y="total_denials",
 	         size="perc_denied_boarding", color="CARRIER",
                  hover_name="CARRIER", log_x=True, size_max=60, 
                  labels={
@@ -57,9 +56,9 @@ def db_plot_total_denied_by_carrier():
 def db_plot_denial_type_by_carrier():
     denied_boarding = pd.read_csv("C:\\Users\\franc\\beat_the_crowd\\beat_the_crowd\\Analysis\\clean_data\\denied_boarding.csv")
     denied_boarding_reshape = pd.melt(denied_boarding.rename(columns = {
-        1:'Involuntary - Received Compensation', 
-        2:'Involuntary - No Compensation', 
-        5:'Voluntary - Received Compensation'
+        '1':'Involuntary - Received Compensation', 
+        '2':'Involuntary - No Compensation', 
+        '5':'Voluntary - Received Compensation'
         }), 
                                       id_vars = ['CARRIER', 'year', 'quarter'], 
                                       value_vars=['Involuntary - Received Compensation', 
@@ -111,10 +110,9 @@ def db_plot_denial_type_by_carrier():
     
     return(fig)
 
-
 def db_plot_denied_compensation_reason():
     denied_boarding = pd.read_csv("C:\\Users\\franc\\beat_the_crowd\\beat_the_crowd\\Analysis\\clean_data\\denied_boarding.csv")
-    denied_boarding_reshape = pd.melt(denied_boarding[denied_boarding[2]>0], 
+    denied_boarding_reshape = pd.melt(denied_boarding[denied_boarding['2']>0], 
                                   id_vars = ['CARRIER', 'year', 'quarter'], 
                                   value_vars=['2(a)','2(b)','2(c)'])
 
@@ -181,7 +179,7 @@ def db_plot_denied_compensation_reason():
 def db_plot_comp_voluntary_by_carrier():
     denied_boarding = pd.read_csv("C:\\Users\\franc\\beat_the_crowd\\beat_the_crowd\\Analysis\\clean_data\\denied_boarding.csv")
     fig = px.scatter(denied_boarding.groupby('CARRIER').mean(numeric_only=True).reset_index(), 
-                 x=5, y=7,size="cash_per_vol_denial", color="CARRIER",
+                 x='5', y='7',size="cash_per_vol_denial", color="CARRIER",
                  hover_name="CARRIER", log_x=True, size_max=60, 
                  labels={
                      "5": "Total Passengers",
