@@ -34,8 +34,7 @@ With a focus on user experience, SmoothFly aims to alleviate the stress and unce
 """)
 
 #dfferent tabs for different tasks
-tab_titles=["ReadMe", "Get your Own Data - The Pipeline", "Analysis - Question 1",
-            "Analysis - Question 2","Insights"]
+tab_titles=["ReadMe", "Get your Own Data - The Pipeline", "Analysis"]
 tabs=st.tabs(tab_titles)
 
 with tabs[0]:
@@ -83,6 +82,10 @@ with tabs[1]:
                     'carrier':carrier
                     }
             source,destination = sql_parsing.input_preparation(inputs=inputs)
-            st.write(f'Source Airport: {source}')
-            st.write(f'Destination Airport: {destination}')
+            # st.write(f'Source Airport: {source}')
+            # st.write(f'Destination Airport: {destination}')
+with tabs[2]:
+    st.title('Analysis')
+    tab_titles=["Denied Boarding","Fares","Delays"]
+    tabs=st.tabs(tab_titles)
 

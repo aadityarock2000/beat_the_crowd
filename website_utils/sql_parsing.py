@@ -24,4 +24,3 @@ def input_preparation(inputs):
     source = fetch_airport_code(inputs['source_airport'])
     destination = fetch_airport_code(inputs['destination_airport'])
     return (source,destination)
-
