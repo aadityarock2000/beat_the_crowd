@@ -91,23 +91,23 @@ jobs:
       # Next step: run pylint. Anything less than 10/10 will fail.
       - name: Lint with pylint
         run: |
-          pylint analysis/**/*.py
+          pylint SmoothFly/**/*.py
 
       # Next step: run the unit tests with code coverage.
       - name: Unit tests
         run: |
-          cd analysis
-          analysis run -m unittest discover
-          analysis report
-          analysis lcov
+          cd SmoothFly
+          SmoothFly run -m unittest discover
+          SmoothFly report
+          SmoothFly lcov
 
       # Lastly: report code coverage to Coveralls.
       - name: Report code coverage to Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          base-path: analysis
-          path-to-lcov: analysis/coverage.lcov
+          base-path: SmoothFly
+          path-to-lcov: SmoothFly/coverage.lcov
           # The following two options are needed for "parallel"
           # runs - ie if you have a matrix of python versions.
           # This holds off on reporting code coverage to
