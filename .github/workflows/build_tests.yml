@@ -26,7 +26,7 @@ jobs:
 
     # Provide a runner. Options are listed on GitHub, but include
     # windows, ubuntu, and macos (latest, as well as specific versions)
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     # In order to get Conda environments to work properly, we need to
     # tell the runner to start up the bash shell in a way that respects
