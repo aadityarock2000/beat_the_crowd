@@ -1,4 +1,4 @@
-name: environment.yml
+name: beat_the_crowd_ci
 channels:
   - plotly
   - defaults
