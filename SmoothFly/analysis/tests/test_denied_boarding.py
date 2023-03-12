@@ -7,7 +7,7 @@ TestDeniedBoarding -- Unit Test class to test denied boarding visualization func
 import unittest
 import sys
 import plotly.graph_objs._figure
-sys.path.append('../create_visualizations')
+sys.path.append('analysis/create_visualizations')
 import denied_boarding # pylint: disable=wrong-import-position
 
 

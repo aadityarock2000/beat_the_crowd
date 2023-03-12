@@ -14,7 +14,7 @@ import plotly.express as px
 import plotly.io as pio
 import plotly.graph_objects as go
 pio.templates.default = "plotly_dark"
-denied_boarding = pd.read_csv("..\\clean_data\\denied_boarding.csv")
+denied_boarding = pd.read_csv("analysis\\clean_data\\denied_boarding.csv")
 
 def db_plot_perc_denied_over_time():
     """
