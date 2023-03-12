@@ -41,7 +41,7 @@ jobs:
     # GitHub will run the tests for each of these Python versions.
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.10"]
 
     # The actual workflow steps!
     steps:
@@ -61,7 +61,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           # Use the environment name from your environment.yml file
-          activate-environment: beat_the_crowd_ci
+          activate-environment: beat_the_crowd
           # The name of the environment file you want conda to use
           environment-file: environment.yml
           # Whether you want conda to automatically update the conda
@@ -133,4 +133,4 @@ jobs:
         parallel-finished: true
         # This says finish the parallel runs that we did above
         # and send to Coveralls.
-        carryforward: "run-3.7,run-3.8,run-3.9,run-3.10"
+        carryforward: "run-3.10"

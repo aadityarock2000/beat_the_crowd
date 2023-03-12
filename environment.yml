@@ -1,4 +1,4 @@
-name: beat_the_crowd_ci
+name: beat_the_crowd
 channels:
   - plotly
   - defaults
