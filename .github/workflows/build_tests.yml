@@ -2,7 +2,7 @@
 # events (eg a workflow that runs on branch pushes, versus a
 # workflow that runs when a GitHub issue is created). Give your
 # workflow a descriptive name so that you know what it is.
-name: build_test
+name: build_tests
 
 # What is the event that triggers this workflow? Options include
 # push, pull_request, create, issues, etc. This configuration says
@@ -61,7 +61,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           # Use the environment name from your environment.yml file
-          activate-environment: ci_example
+          activate-environment: beat_the_crowd_ci
           # The name of the environment file you want conda to use
           environment-file: environment.yml
           # Whether you want conda to automatically update the conda
@@ -91,23 +91,23 @@ jobs:
       # Next step: run pylint. Anything less than 10/10 will fail.
       - name: Lint with pylint
         run: |
-          pylint entropy/**/*.py
+          pylint analysis/**/*.py
 
       # Next step: run the unit tests with code coverage.
       - name: Unit tests
         run: |
-          cd entropy
-          coverage run -m unittest discover
-          coverage report
-          coverage lcov
+          cd analysis
+          analysis run -m unittest discover
+          analysis report
+          analysis lcov
 
       # Lastly: report code coverage to Coveralls.
       - name: Report code coverage to Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          base-path: entropy
-          path-to-lcov: entropy/coverage.lcov
+          base-path: analysis
+          path-to-lcov: analysis/coverage.lcov
           # The following two options are needed for "parallel"
           # runs - ie if you have a matrix of python versions.
           # This holds off on reporting code coverage to
