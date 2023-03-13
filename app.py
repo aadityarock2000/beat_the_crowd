@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 from website_utils import departure_input_data, sql_parsing
+import analysis.create_visualizations.denied_boarding as db_viz
 
 
 st.set_page_config(
@@ -88,4 +89,20 @@ with tabs[2]:
     st.title('Analysis')
     tab_titles=["Denied Boarding","Fares","Delays"]
     tabs=st.tabs(tab_titles)
+    with tabs[0]:
+        fig1=db_viz.db_plot_perc_denied_over_time()
+        fig2=db_viz.db_plot_perc_denied_by_carrier()
+        fig3=db_viz.db_plot_total_denied_by_carrier()
+        #fig4=db_viz.db_plot_denial_type_by_carrier()
+        fig5=db_viz.db_plot_denied_compensation_reason()
+        fig6=db_viz.db_plot_comp_voluntary_by_carrier()
+
+        st.plotly_chart(fig1,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig3,use_container_width=True)
+        st.plotly_chart(fig4,use_container_width=True)
+        st.plotly_chart(fig5,use_container_width=True)
+        st.plotly_chart(fig6,use_container_width=True)
+
+
 
