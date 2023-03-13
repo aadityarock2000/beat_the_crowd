@@ -154,7 +154,6 @@ def execute_code(cnxn,query,from_date,to_date,file_format):
     elif file_format=='Excel':
         # execute the query and create a DataFrame
         df = pd.read_sql(query, cnxn)
-
         # create an Excel file from the DataFrame
         excel_file = io.BytesIO()
         writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
