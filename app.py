@@ -6,6 +6,7 @@ import datetime
 import streamlit as st
 import numpy as np
 import pandas as pd
+import sqlite3
 
 from website_utils import departure_input_data, sql_parsing
 import analysis.create_visualizations.denied_boarding as db_viz
@@ -85,9 +86,46 @@ with tabs[1]:
                     'to_date':to_date,
                     'carrier':carrier
                     }
-            sql_parsing.input_preparation(inputs=inputs)
-            # st.write(f'Source Airport: {source}')
-            # st.write(f'Destination Airport: {destination}')
+            parsed_inputs = sql_parsing.input_preparation(inputs=inputs)
+            query,from_date,to_date,file_format=sql_parsing.create_query_string(parsed_inputs = parsed_inputs)
+            print(query,from_date,to_date,file_format)
+            cnxn=sql_parsing.connect_sql_server()
+            print(cnxn)
+            if file_format=='CSV':
+                csv_string=sql_parsing.execute_code(cnxn,query,from_date,to_date,file_format)
+                st.download_button(
+                    label="Download CSV",
+                    data=csv_string,
+                    file_name="output.csv",
+                    mime="text/csv"
+                )
+            elif file_format=='Excel':
+                excel_file=sql_parsing.execute_code(cnxn,query,from_date,to_date,file_format)
+                #create a download button for the user
+                st.download_button(
+                    label="Download Excel",
+                    data=excel_file.getvalue(),
+                    file_name="output.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+            else:
+                df=sql_parsing.execute_code(cnxn,query,from_date,to_date,file_format)
+                 # create an in-memory SQLite database
+                sqlite_conn = sqlite3.connect(':memory:')
+
+                # create a table in the database from the DataFrame
+                df.to_sql(name='table_name', con=sqlite_conn, index=False)
+
+                # allow user to download database file
+                with sqlite_conn:
+                    bytes = sqlite_conn.backup().read()
+                    st.download_button(
+                        label="Download SQL Database",
+                        data=bytes,
+                        file_name="output.db",
+                        mime="application/octet-stream"
+                    )
+
 
 #Analysis tabs
 with tabs[2]:
