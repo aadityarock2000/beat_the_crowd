@@ -23,8 +23,8 @@ class TestFares(unittest.TestCase):
     Inherited from unittest -- https://docs.python.org/3/library/unittest.html
     Methods
     -------
-    test_delays_not_none(): Perform non none test on denied boarding functions.
-    test_delays_plotly_fig(): Perform plotly figure test on denied boarding functions.
+    test_fares_not_none(): Perform non none test on denied boarding functions.
+    test_fares_plotly_fig(): Perform plotly figure test on denied boarding functions.
     """
     def test_fares_not_none(self):
         """Return the result of test for return value of none of denied boarding functions."""
