@@ -189,11 +189,3 @@ def pct_by_avg_fare():
 
     return(fig)
 
-    
-    
-    
-    
-    
-    
-    
-    
