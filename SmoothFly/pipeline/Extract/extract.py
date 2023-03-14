@@ -288,6 +288,23 @@ def extract_main(path):
 
     session.close()
 
+def update_data(path):
+    session = requests.Session()
+    session.headers.update(HEADERS)
+    initial_page(session)
+    for i in PROCESSED:
+        try:
+            AIRPORTS.remove(i)
+        except ValueError:
+            pass
+    print(AIRPORTS)
+    for airport in AIRPORTS:
+        logging.debug('### Processing for %s', airport)
+        query_aspx(airport, path,session)
+        PROCESSED.append(airport)
+
+    session.close()
+
 
 if __name__ == "__main__":
     PROCESSED = []
