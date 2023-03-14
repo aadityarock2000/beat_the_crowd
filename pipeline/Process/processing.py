@@ -1,6 +1,3 @@
-import os
-import pandas as pd
-
 """
 This function takes two arguments: name and csv. The csv argument is expected to be a Pandas
 DataFrame object containing flight data. The name argument is a string representing the name 
@@ -9,8 +6,12 @@ by renaming and deleting certain columns, and adding new columns to represent th
 a standardized format. Finally, the function returns a modified DataFrame that filters out rows 
 where the flightNumber column is equal to 'Flight Number'.
 """
-def process_csv(name, csv):
 
+import os
+import pandas as pd
+
+
+def process_csv(name, csv):
     """
     Process flight data in a CSV file to a standardized format.
 
@@ -81,13 +82,42 @@ def process_csv(name, csv):
 
     return csv[(csv['flightNumber'] != 'Flight Number')]
 
-def processing_main():
-    path = '../../data/pipeline_data'
-    fileList = os.listdir(path)
-    for file in fileList:
-        csv = pd.read_csv(path+'/'+file)
-        csv = process_csv(file,csv)
-        print(csv)
-        break
+def write_file_to_csv(path, file_name, file):
+    """
+    Writes a pandas DataFrame to a CSV file in the given path.
 
-processing_main()
+    Args:
+        path (str): The path to the directory where the CSV file will be written.
+        file_name (str): The name of the CSV file to be written.
+        file (pd.DataFrame): The pandas DataFrame to be written to the CSV file.
+
+    Returns:
+        None
+    """
+    file.to_csv(path+'/'+file_name,index=False)
+
+def processing_main(path):
+    """
+    Reads a list of CSV files in the given path, processes each CSV file and writes the 
+    processed data to a new CSV file.
+
+    Args:
+        path (str): The path to the directory containing the CSV files.
+
+    Returns:
+        None
+    """
+    file_list = os.listdir(path)
+    for file in file_list:
+        split_len = len(file.split('.'))
+
+        if split_len > 1:
+            ext = file.split('.')[1]
+            if ext == 'csv':
+                csv = pd.read_csv(path+'/'+file)
+                csv = process_csv(str(file), csv)
+                write_file_to_csv(path, file, csv)
+
+if __name__ == "__main__":
+    PATH = '../../data/pipeline_data'
+    processing_main(PATH)
