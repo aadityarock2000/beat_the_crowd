@@ -10,6 +10,8 @@ import sqlite3
 
 from website_utils import departure_input_data, sql_parsing
 import analysis.create_visualizations.denied_boarding as db_viz
+import analysis.create_visualizations.delays as delay_viz
+import analysis.create_visualizations.fares as fares_viz
 
 
 st.set_page_config(
@@ -132,19 +134,40 @@ with tabs[2]:
     st.title('Analysis')
     tab_titles=["Denied Boarding","Fares","Delays"]
     tabs=st.tabs(tab_titles)
-    # with tabs[0]:
-    #     fig1=db_viz.db_plot_perc_denied_over_time()
-    #     fig2=db_viz.db_plot_perc_denied_by_carrier()
-    #     fig3=db_viz.db_plot_total_denied_by_carrier()
-    #     fig4=db_viz.db_plot_denial_type_by_carrier()
-    #     fig5=db_viz.db_plot_denied_compensation_reason()
-    #     fig6=db_viz.db_plot_comp_voluntary_by_carrier()
+    with tabs[0]:
+        fig1=db_viz.db_plot_perc_denied_over_time()
+        fig2=db_viz.db_plot_perc_denied_by_carrier()
+        fig3=db_viz.db_plot_total_denied_by_carrier()
+        fig4=db_viz.db_plot_denial_type_by_carrier()
+        fig5=db_viz.db_plot_denied_compensation_reason()
+        fig6=db_viz.db_plot_comp_voluntary_by_carrier()
 
-    #     st.plotly_chart(fig1,use_container_width=True)
-    #     st.plotly_chart(fig2,use_container_width=True)
-    #     st.plotly_chart(fig3,use_container_width=True)
-    #     st.plotly_chart(fig4,use_container_width=True)
-    #     st.plotly_chart(fig5,use_container_width=True)
-    #     st.plotly_chart(fig6,use_container_width=True)
+        st.plotly_chart(fig1,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig3,use_container_width=True)
+        st.plotly_chart(fig4,use_container_width=True)
+        st.plotly_chart(fig5,use_container_width=True)
+        st.plotly_chart(fig6,use_container_width=True)
 
+    with tabs[1]:
+        fig1=fares_viz.avg_lh_sh_fares()
+        fig2=fares_viz.prem_disc_by_year()
+        fig3=fares_viz.avg_fare_by_city()
+        fig4=fares_viz.pct_by_avg_fare()
+
+        st.plotly_chart(fig1,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig3,use_container_width=True)
+        st.plotly_chart(fig4,use_container_width=True)
+
+    with tabs[2]:
+        fig1=delay_viz.create_delay_ranking()
+        fig2=delay_viz.create_delay_ct_breakdown()
+        fig3=delay_viz.create_delay_min_breakdown()
+        fig4=delay_viz.pct_delays_by_carrier()
+
+        st.plotly_chart(fig1,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig3,use_container_width=True)
+        st.plotly_chart(fig4,use_container_width=True)
 
