@@ -20,6 +20,7 @@ def create_table():
     the 2003 to 2022 time period. No inputs are required for this function,
     and it returns a plotly graphical object of the bar plot upon execution"""
 
+
     consumer_fares = pd.read_csv("..\\raw_data\\Consumer_Airfare_Report__Table_7_-_Fare_Premiums_for_Select_Cities_with_More_Than_20_Passengers_per_Day.csv")
     consumer_fares = consumer_fares.drop(['tbl', 'tbl7pk'], axis=1) # dropping unncessary columns from data source
 
@@ -185,8 +186,10 @@ def pct_by_avg_fare():
                                                   {"title":go.layout.xaxis.Title(
                                                       text=f"Percent of Passengers Flying by Average Fare Price <br><sup>{k} </sup>"
                                                           )}],}
+
             for k in figs.keys()
     ]), x=1)])
 
     return fig
     
+

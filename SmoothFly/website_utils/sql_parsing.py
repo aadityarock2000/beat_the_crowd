@@ -48,9 +48,24 @@ def input_preparation(inputs,path,car_path):
     Parses the input from the user in the website, and prepares it for parsing in SQL
     '''
     #print(inputs)
-    if not inputs['source_airport'] or not inputs['destination_airport'] or not inputs['carrier'] \
-            or not inputs['from_date'] or not inputs['to_date'] or not inputs['file_format']:
-        raise ValueError('All fields are required.')
+    required_fields = {
+        'source_airport': inputs['source_airport'],
+        'destination_airport': inputs['destination_airport'],
+        'carrier': inputs['carrier'],
+        'from_date': inputs['from_date'],
+        'to_date': inputs['to_date'],
+        'file_format': inputs['file_format']
+    }
+
+    missing_fields = [field for field, value in required_fields.items() if not value]
+
+    if missing_fields:
+        missing_fields_str = ', '.join(missing_fields)
+        raise ValueError(f"The '{missing_fields_str}' field(s) is/are required.")
+
+# if not inputs['source_airport'] or not inputs['destination_airport'] or not inputs['carrier'] \
+#         or not inputs['from_date'] or not inputs['to_date'] or not inputs['file_format']:
+#     raise ValueError('All fields are required.')
 
 
     source = []
@@ -174,12 +189,12 @@ def execute_code(cnxn,query,file_format):
         cnxn.close()
         return csv_file
 
-    elif file_format=='Excel':
+    if file_format=='Excel':
         # execute the query and create a DataFrame
         data1 = pd.DataFrame(rows, columns=columns)
         data1.to_excel('output.xlsx', index=False)
         return 'output.xlsx'
-    else:
-        data1 = pd.read_sql(query, cnxn)
-        cnxn.close()
-        return data1
+
+    data1 = pd.read_sql(query, cnxn)
+    cnxn.close()
+    return data1
