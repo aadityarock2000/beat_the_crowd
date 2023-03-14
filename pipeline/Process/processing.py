@@ -1,5 +1,6 @@
 """
-    A class that processes flight data in CSV format to a standardized format.
+    A set of functions that processes flight data in CSV format to a 
+    standardized format.
 
     Args:
         path (str): The path to the directory containing the CSV files.

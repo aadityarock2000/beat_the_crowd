@@ -16,10 +16,6 @@ Methods:
     loading_main(path: str) -> None:
         Reads a list of CSV files from a given path and inserts their data into the 'airline_stats' 
         table in the connected database.
-
-Example usage:
-    loader = AirlineDataLoader()
-    loader.loading_main('../../data/pipeline_data/processed')
 """
 
 import os
