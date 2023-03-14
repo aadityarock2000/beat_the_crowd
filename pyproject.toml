@@ -1,0 +1,24 @@
+[build-system]
+requires = ["plotly","pyodbc","pandas"]
+build-backend = "beat_the_crowd.build"
+
+[project]
+name = "beat_the_crowd"
+version = "0.0.1"
+authors = [
+  { name="Frances Scott-Weis", email="fasw@uw.edu" },
+  { name="Matthew Blake", email="mcb2016@uw.edu"},
+  { name="Soham Butala", email="sbutala@uw.edu"},
+  { name="Aaditya Parthasarathy", email="aadi2000@uw.edu"},
+]
+description = "Tool to ease the stress of traveling with data on flight routes"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/aadityarock2000/beat_the_crowd"
