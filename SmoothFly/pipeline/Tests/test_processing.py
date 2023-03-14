@@ -12,8 +12,8 @@ import unittest
 import pandas as pd
 from pandas.testing import assert_frame_equal
 #pylint: disable=wrong-import-position
-sys.path.append("../Process")
-from processing import process_csv, processing_main
+sys.path.append("pipeline/Process")
+import processing
 #pylint: disable=wrong-import-position
 
 
@@ -87,7 +87,7 @@ class TestProcessCSV(unittest.TestCase):
         Compares the output dataframe with an expected dataframe to ensure that the 
         function processes the data correctly.
         """
-        result = process_csv('test.csv', self.csv_data)
+        result = processing.process_csv('test.csv', self.csv_data)
         assert_frame_equal(result, self.expected_data)
         self.assertEqual(len(result), 3)
 
@@ -97,7 +97,7 @@ class TestProcessCSV(unittest.TestCase):
         returns an empty dataframe.
         """
         data_frame = pd.DataFrame()
-        result = process_csv('empty_data.csv', data_frame)
+        result = processing.process_csv('empty_data.csv', data_frame)
         self.assertIsInstance(result, pd.DataFrame)
         self.assertEqual(len(result), 0)
 
@@ -107,7 +107,7 @@ class TestProcessCSV(unittest.TestCase):
         Assert that the function returns an empty dataframe.
         """
         data_frame = pd.read_csv('Test_Suite/Header_only.csv')
-        result = process_csv('Header_only.csv', data_frame)
+        result = processing.process_csv('Header_only.csv', data_frame)
         self.assertIsInstance(result, pd.DataFrame)
         self.assertEqual(len(result), 0)
 
@@ -117,7 +117,7 @@ class TestProcessCSV(unittest.TestCase):
         Compares the output dataframe with an expected dataframe to ensure that the 
         function processes the data correctly.
         """
-        result = process_csv('test.csv', self.csv_data)
+        result = processing.process_csv('test.csv', self.csv_data)
         self.assertIsInstance(result, pd.DataFrame)
         self.assertEqual(len(result), 3)
 
