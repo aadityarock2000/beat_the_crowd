@@ -1,5 +1,7 @@
 import requests
-from bs4 import BeautifulSoup
+from   bs4 import BeautifulSoup
+import logging
+logging.basicConfig(filename='data-collection.log', encoding='utf-8', level=logging.DEBUG)
 
 # Global Data Template
 def reset():
@@ -115,6 +117,7 @@ def reset():
     }
 
         
+# Update state (aspx related) to maintain authorization. Assume state like a CSRF token for a given form 
 def updateState(soup):  
     data['__VIEWSTATE']          = soup.find('input', attrs={'id': '__VIEWSTATE'})['value']
     data['__VIEWSTATEGENERATOR'] = soup.find('input', attrs={'id': '__VIEWSTATEGENERATOR'})['value']
@@ -122,7 +125,7 @@ def updateState(soup):
 
 # Extract master data of all airports and airlines from the initial page
 def getMasterData(r):
-    
+    logging.debug('### Inside Master Call')
     global airports
     global airlines
     airlines.clear()
@@ -139,13 +142,16 @@ def getMasterData(r):
     for air in airlinesList:        
         airlines.append(air['value'])
         
+    logging.debug('### Outside Master Call')
     
 
 # Get the initial page 
 def initialPage():
     global s
+    logging.debug('### Inside Initial Call')
     r=s.get(url,headers=headers, verify=False)
     getMasterData(r)
+    logging.debug('### Outside Initial Call')
 
 
 # Function to modify data to get a downloadable CSV from BTS.gov. Resets the data back for next airline/airport
@@ -178,15 +184,21 @@ def queryASPX(airport):
         updateState(soup)
         airportCSV = getAirportCSV()
         if(airportCSV.status_code == 200):
+            logging.debug('--------> Found data for '+airline)
             airportCSV = airportCSV.content
             with open('dc/'+airport+'.csv', 'ba') as f:
                 start = airportCSV.find(b'\n\n')
                 airportCSV = airportCSV[start+1:]
                 end = airportCSV.find(b'\n\n')
                 airportCSV = airportCSV[:end]
-                f.write(airportCSV)        
+                f.write(airportCSV)
+        else:
+            logging.debug('Ran into a problem for : '+airport+' & '+airline+' : Code : '+ str(airportCSV.status_code))             
 
-def extract_main(path):
+# Calls all the initialization methods and loops through all the airports to generate CSV
+# Failure mechanism is included so even if any error is encountered like : remote host closed the connection, stale state of view (CSRF Token)
+# Upon reexecution of this method it should start from the point where the error was encountered
+def main():
     global headers
     global s
     global airports
@@ -194,16 +206,16 @@ def extract_main(path):
     s = requests.Session()
     s.headers.update(headers)
     initialPage()
-    for i in PROCESSED:
+    for i in processed:
         try:
             airports.remove(i)
         except ValueError:
             pass
     print(airports)
     for airport in airports:
-        
+        logging.debug('### Processing for '+airport)
         queryASPX(airport)
-        PROCESSED.append(airport)
+        processed.append(airport)
     
 if __name__ == "__main__":
     PROCESSED = []
