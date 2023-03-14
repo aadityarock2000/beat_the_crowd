@@ -1,13 +1,26 @@
 """
-This function takes two arguments: name and csv. The csv argument is expected to be a Pandas
-DataFrame object containing flight data. The name argument is a string representing the name 
-of the file from which the csv data was extracted. The function modifies the csv data in-place 
-by renaming and deleting certain columns, and adding new columns to represent the flight data in 
-a standardized format. Finally, the function returns a modified DataFrame that filters out rows 
-where the flightNumber column is equal to 'Flight Number'.
-"""
-def process_csv(name, csv):
+    A set of functions that processes flight data in CSV format to a 
+    standardized format.
 
+    Args:
+        path (str): The path to the directory containing the CSV files.
+
+    Attributes:
+        path (str): The path to the directory containing the CSV files.
+
+    Methods:
+        process_csv(name, csv):
+            Processes flight data in a CSV file to a standardized format.
+
+        processing_main():
+            Reads a list of CSV files in the given path, processes each CSV file and writes the 
+            processed data to a new CSV file.
+"""
+import os
+import pandas as pd
+
+
+def process_csv(name, csv):
     """
     Process flight data in a CSV file to a standardized format.
 
@@ -19,6 +32,12 @@ def process_csv(name, csv):
     pandas.DataFrame: The modified DataFrame object, where certain columns have been renamed, 
     deleted or added.
     """
+
+    if not isinstance(csv,pd.DataFrame):
+        return csv
+
+    if 'Destination Airport' not in csv.columns:
+        return csv
 
     name = name.split('.')[0]
     csv['source'] = name
@@ -77,3 +96,29 @@ def process_csv(name, csv):
     del csv['Delay Late Aircraft Arrival (Minutes)']
 
     return csv[(csv['flightNumber'] != 'Flight Number')]
+
+def processing_main(path):
+    """
+    Reads a list of CSV files in the given path, processes each CSV file and writes the 
+    processed data to a new CSV file.
+
+    Args:
+        path (str): The path to the directory containing the CSV files.
+
+    Returns:
+        None
+    """
+    file_list = os.listdir(path)
+    for file in file_list:
+        split_len = len(file.split('.'))
+
+        if split_len > 1:
+            ext = file.split('.')[1]
+            if ext == 'csv':
+                csv = pd.read_csv(path+'/'+file)
+                csv = process_csv(str(file), csv)
+                csv.to_csv(path+'/'+file, index=False)
+
+if __name__ == "__main__":
+    PATH = '../../data/pipeline_data'
+    processing_main(PATH)
