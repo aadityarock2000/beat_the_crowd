@@ -4,7 +4,7 @@ input to the streamlit app for selection.
 """
 import unittest
 import sys
-sys.path.append("SmoothFly/website_utils")
+sys.path.append("./SmoothFly/website_utils")
 from website_utils.departure_input_data import airport_list, carrier_list, file_types # pylint: disable=wrong-import-position, import-error
 
 class TestAirportList(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestAirportList(unittest.TestCase):
         airports when given a valid path to a CSV file.
         """
         # Smoke test
-        path = '../website_utils/reference_data/airport_codes_reference.csv'
+        path = 'website_utils/reference_data/airport_codes_reference.csv'
         airports = airport_list(path)
         self.assertIsInstance(airports, list)
         self.assertTrue(len(airports) > 0)
@@ -41,7 +41,7 @@ class TestAirportList(unittest.TestCase):
         An edge test to check if the function returns ['All'] 
         when given an empty CSV file.
         """
-        path = '../website_utils/reference_data/empty_file.csv'
+        path = 'website_utils/reference_data/empty_file.csv'
         airports = airport_list(path)
         self.assertEqual(airports, ['All'])
 
@@ -51,7 +51,7 @@ class TestAirportList(unittest.TestCase):
         contains 'All' as one of its elements.
         """
         self.assertIn('All', airport_list(
-            '../website_utils/reference_data/airport_codes_reference.csv'))
+            'website_utils/reference_data/airport_codes_reference.csv'))
 
 
 class TestCarrierList(unittest.TestCase):
@@ -78,7 +78,7 @@ class TestCarrierList(unittest.TestCase):
         A smoke test to check if the function returns a list of 
         carriers when given a valid path to a CSV file.
         """
-        file = '../website_utils/reference_data/airport_carrier_codes_reference.csv'
+        file = 'website_utils/reference_data/airport_carrier_codes_reference.csv'
         carriers = carrier_list(file)
         self.assertIsInstance(carriers, list)
         self.assertTrue(len(carriers) > 0)
@@ -87,7 +87,7 @@ class TestCarrierList(unittest.TestCase):
         """
         An edge test to check if the function returns ['All'] when given an empty CSV file."""
         # Edge test 1
-        file = '../website_utils/reference_data/empty_file.csv'
+        file = 'website_utils/reference_data/empty_file.csv'
         carriers = carrier_list(file)
         self.assertEqual(carriers, ['All'])
     def test_edge_2(self):
