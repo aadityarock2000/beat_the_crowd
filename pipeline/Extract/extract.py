@@ -163,6 +163,29 @@ def getAirportCSV():
     data['btnSubmit'] = 'Submit'
     return r
 
+# Queries all airlines for a given airport and saves a single csv for an airport
+def queryASPX(airport):
+    global s
+    global headers
+    global data
+    global url
+    global airlines
+    data['cboAirport'] = airport
+    for airline in airlines:
+        data['cboAirline'] = airline
+        r = s.post(url,headers=headers, data=data,verify=False)
+        soup = BeautifulSoup(r.content, 'html.parser')   
+        updateState(soup)
+        airportCSV = getAirportCSV()
+        if(airportCSV.status_code == 200):
+            airportCSV = airportCSV.content
+            with open('dc/'+airport+'.csv', 'ba') as f:
+                start = airportCSV.find(b'\n\n')
+                airportCSV = airportCSV[start+1:]
+                end = airportCSV.find(b'\n\n')
+                airportCSV = airportCSV[:end]
+                f.write(airportCSV)        
+
 def extract_main(path):
     global headers
     global s
