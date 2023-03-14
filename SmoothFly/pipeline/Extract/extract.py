@@ -28,8 +28,7 @@ logging.basicConfig(filename='data-collection.log',
 
 URL = 'https://www.transtats.bts.gov/ontime/departures.aspx'
 HEADERS = {'User-Agent':
-           '''Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
-      Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.50'''}
+           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.50'}
 AIRPORTS = []
 AIRLINES = []
 DATA = {
@@ -144,6 +143,8 @@ def update_state(soup):
     Returns:
         None.
     """
+    if soup is None:
+        return None
     DATA['__VIEWSTATE'] = soup.find(
         'input', attrs={'id': '__VIEWSTATE'})['value']
     DATA['__VIEWSTATEGENERATOR'] = soup.find(
@@ -163,6 +164,10 @@ def get_master_data(response):
     Raises:
         None.
     """
+
+    if response is None:
+        return None
+
     logging.debug('### Inside Master Call')
     AIRLINES.clear()
     AIRPORTS.clear()
@@ -192,10 +197,13 @@ def initial_page(session):
     Returns:
         None.
     """
-    logging.debug('### Inside Initial Call')
-    response = session.get(URL, headers=HEADERS, verify=False)
-    get_master_data(response)
-    logging.debug('### Outside Initial Call')
+    if session is None or HEADERS is None:
+        return None
+    else:
+        logging.debug('### Inside Initial Call')
+        response = session.get(URL, headers=HEADERS, verify=False)
+        get_master_data(response)
+        logging.debug('### Outside Initial Call')
 
 
 def get_airport_csv(session):
@@ -207,6 +215,8 @@ def get_airport_csv(session):
     Returns:
         requests.Response: Response object from the post request to download the CSV.
     """
+    if DATA is None or DATA['__VIEWSTATE'] == '':
+        return None
     DATA['__EVENTTARGET'] = 'DL_CSV'
     DATA['__EVENTARGUMENT'] = ''
     del DATA['btnSubmit']
@@ -227,6 +237,8 @@ def query_aspx(airport, path, session):
     Returns:
         None.
     """
+    if DATA is None:
+        return None
     DATA['cboAirport'] = airport
     for airline in AIRLINES:
         DATA['cboAirline'] = airline
@@ -253,6 +265,8 @@ def extract_main(path):
     Extracts data for all airports and saves it in a CSV file.
     Arguments:
         path (str): The path where the CSV files will be saved.
+        nums (int): Added for testing. Since this method loads all the data from the website.
+        nums will determine the number of airports to cover
     Returns:
         None.
     """

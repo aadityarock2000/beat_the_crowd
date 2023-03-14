@@ -16,11 +16,13 @@ sys.path.append("../Process")
 from processing import process_csv, processing_main
 #pylint: disable=wrong-import-position
 
-"""
-Class:
-    TestProcessCSV
 
-Functions :
+class TestProcessCSV(unittest.TestCase):
+
+    """
+    Class:
+        TestProcessCSV
+    Functions :
     - test_one_shot(): This test case tests the function using a non-empty dataframe as input.
     It checks if the returned dataframe is equal to the expected dataframe and has the expected
     number of rows.
@@ -31,8 +33,7 @@ Functions :
     - test_edge_one_row(): This test case tests the function using a dataframe with only one row as
     input. It checks if the returned dataframe has the expected number of rows and is of type
     pandas DataFrame.
-"""
-class TestProcessCSV(unittest.TestCase):
+    """
 
     def setUp(self):
         """
@@ -120,11 +121,13 @@ class TestProcessCSV(unittest.TestCase):
         self.assertIsInstance(result, pd.DataFrame)
         self.assertEqual(len(result), 3)
 
-"""
-Class:
-    TestProcessingMain
+class TestProcessingMain(unittest.TestCase):
 
-Functions :
+    """
+    Class:
+        TestProcessingMain
+
+    Functions :
     - test_processing_main_smoke : Smoke test for processing_main function. 
     Test that processing_main function can be called without errors on an empty directory.
     - test_processing_main_one_shot : Test case for processing_main() with a single input CSV file. 
@@ -134,9 +137,8 @@ Functions :
     - test_processing_main_edge : Test case for processing_main() with an input file that is not 
     a CSV. The test case creates a non-CSV file in a temporary directory, runs processing_main() 
     on it, and verifies that the file is not modified. Finally, the temporary file is deleted.
-"""
+    """
 
-class TestProcessingMain(unittest.TestCase):
     def test_processing_main_smoke(self):
         """
         Smoke test for processing_main function.
