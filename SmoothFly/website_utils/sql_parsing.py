@@ -64,7 +64,6 @@ def input_preparation(inputs):
         for car in inputs['carrier']:
             carrier.append(fetch_carrier_code(car))
 
-    
     #fetching the rest of the inputs
     from_date=inputs['from_date']
     to_date=inputs['to_date']
@@ -117,7 +116,7 @@ def create_query_string(parsed_inputs):
     to_= "'"+parsed_inputs['to_date'].strftime(r"%Y-%m-%d")+"'"
     query +='date BETWEEN '+from_+' AND '+to_+';'
 
-    return query,parsed_inputs['from_date'],parsed_inputs['to_date'],parsed_inputs['file_format']
+    return query,parsed_inputs['file_format']
 
 def connect_sql_server():
     '''
@@ -135,7 +134,7 @@ def connect_sql_server():
     cnxn = pyodbc.connect(connection_string)
     return cnxn
 
-def execute_code(cnxn,query,from_date,to_date,file_format):
+def execute_code(cnxn,query,file_format):
     '''
     Executes the code and returns the file to be downloaded
     '''
@@ -144,8 +143,8 @@ def execute_code(cnxn,query,from_date,to_date,file_format):
 
 
 
-    cursor.execute(query)
-    #cursor.execute('SELECT TOP 5 * FROM airline_stats;')
+    #cursor.execute(query)
+    cursor.execute('SELECT TOP 5 * FROM airline_stats;')
     columns = [column[0] for column in cursor.description]
     # Retrieve the results
     rows = cursor.fetchall()
@@ -157,6 +156,7 @@ def execute_code(cnxn,query,from_date,to_date,file_format):
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(columns)
         csv_writer.writerows(rows)
+        cnxn.close()
         return csv_file
 
         # results = cursor.fetchall()
@@ -171,16 +171,10 @@ def execute_code(cnxn,query,from_date,to_date,file_format):
         # return csv_string
     elif file_format=='Excel':
         # execute the query and create a DataFrame
-        df = pd.read_sql(query, cnxn)
-        # create an Excel file from the DataFrame
-        excel_file = io.BytesIO()
-        writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Sheet1', index=False)
-        writer.save()
-        excel_file.seek(0)
-        return excel_file
+        data1 = pd.DataFrame(rows, columns=columns)
+        data1.to_excel('output.xlsx', index=False)
+        return 'output.xlsx'
     else:
-        df = pd.read_sql(query, cnxn)
-        return df
-    
-    cnxn.close()
+        data1 = pd.read_sql(query, cnxn)
+        cnxn.close()
+        return data1
