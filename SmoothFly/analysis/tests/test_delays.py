@@ -16,7 +16,7 @@ class TestDelays(unittest.TestCase):
     # Smoke Test
             
     def test_plot_smoke(self):
-        delays.creat_delay_ranking()
+        delays.create_delay_ranking()
         self.assertTrue(True)
         
     def test_plot_smoke2(self):
