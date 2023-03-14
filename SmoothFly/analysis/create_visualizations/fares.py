@@ -17,14 +17,9 @@ def create_table():
     the 2003 to 2022 time period. No inputs are required for this function,
     and it returns a plotly graphical object of the bar plot upon execution"""
 
-<<<<<<< HEAD
-    consumer_fares = pd.read_csv("analysis\\raw_data\\Consumer_Airfare_Report__Table_7_-_Fare_Premiums_for_Select_Cities_with_More_Than_20_Passengers_per_Day.csv")
-    consumer_fares = consumer_fares.drop(['tbl', 'tbl7pk'], axis = 1) # dropping unncessary columns from data source
-=======
     consumer_fares = pd.read_csv("analysis\\raw_data\\Consumer_Airfare_Report__Table_7_-_Fare_Premiums_for_Select_Cities_with_More_Than_20_Passengers_per_Day.csv") # pylint: disable=line-too-long
     consumer_fares = consumer_fares.drop(['tbl', 'tbl7pk'], axis = 1)
     # dropping unncessary columns from data source
->>>>>>> main
 
     consumer_fares = consumer_fares.rename(columns={'SHAvgHubFare' : 'Short_haul_avg_fare',
                                                     'LHAvgHubFare' : 'Long_haul_avg_fare',
@@ -189,9 +184,4 @@ def pct_by_avg_fare():
     for k in figs.keys()
     ]), x = 1)])
 
-<<<<<<< HEAD
-    return(fig)
-
-=======
     return(fig) # pylint: disable=superfluous-parens
->>>>>>> main

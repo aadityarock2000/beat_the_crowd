@@ -22,7 +22,7 @@ def airport_list(path):
     except pd.errors.EmptyDataError:
         # Handle the edge case of reading an empty file
         return ['All']
-    
+
     airports = ['All'] + list(airport_code_reference['Airport_name'])
     return airports
 
@@ -31,14 +31,15 @@ def carrier_list(file):
     Returns the list of air carriers that are in the reference files for carriers_list.txt
     '''
     try:
-        airport_carrier_codes_reference=pd.read_csv(file)
+        airport_carrier_codes_reference = pd.read_csv(file)
     except pd.errors.EmptyDataError:
         return ['All']
-    except FileNotFoundError:
-        raise FileNotFoundError("The file could not be found.")
-        
-    carriers=['All']+list(airport_carrier_codes_reference['Carrier_name'])
-    return carriers
+    except FileNotFoundError as exc:
+        raise FileNotFoundError("The file '" + file + "' could not be found.") from exc
+
+
+    carrier_lists=['All']+list(airport_carrier_codes_reference['Carrier_name'])
+    return carrier_lists
 
 def file_types():
     '''
@@ -48,5 +49,4 @@ def file_types():
     return types
 
 if __name__=='__main__':
-    l=airport_list()
-    print(l)
+    print('Hello')
