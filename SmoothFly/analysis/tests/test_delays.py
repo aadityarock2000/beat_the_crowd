@@ -15,7 +15,7 @@ import delays # pylint: disable=wrong-import-position
 # Define a class in which the tests will run
 class TestDelays(unittest.TestCase):
     """
-    Test denied boarding functions.
+    Test delays functions.
     
     ...
     Attributes
@@ -23,11 +23,11 @@ class TestDelays(unittest.TestCase):
     Inherited from unittest -- https://docs.python.org/3/library/unittest.html
     Methods
     -------
-    test_delays_not_none(): Perform non none test on denied boarding functions.
-    test_delays_plotly_fig(): Perform plotly figure test on denied boarding functions.
+    test_delays_not_none(): Perform non none test on delays functions.
+    test_delays_plotly_fig(): Perform plotly figure test on delays functions.
     """
     def test_delays_not_none(self):
-        """Return the result of test for return value of none of denied boarding functions."""
+        """Return the result of test for return value of none of delays functions."""
         test_cases = [
             delays.create_delay_ranking(),
             delays.create_delay_ct_breakdown(),
@@ -40,7 +40,7 @@ class TestDelays(unittest.TestCase):
             test(fig)
 
     def test_delays_plotly_fig(self):
-        """Return the result of plotly figure test of denied boarding functions."""
+        """Return the result of plotly figure test of delays functions."""
         test_cases = [
             delays.create_delay_ranking(),
             delays.create_delay_ct_breakdown(),

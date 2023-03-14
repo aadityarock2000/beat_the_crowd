@@ -15,7 +15,7 @@ import fares # pylint: disable=wrong-import-position
 # Define a class in which the tests will run
 class TestFares(unittest.TestCase):
     """
-    Test denied boarding functions.
+    Test fares functions.
     
     ...
     Attributes
@@ -23,11 +23,11 @@ class TestFares(unittest.TestCase):
     Inherited from unittest -- https://docs.python.org/3/library/unittest.html
     Methods
     -------
-    test_fares_not_none(): Perform non none test on denied boarding functions.
-    test_fares_plotly_fig(): Perform plotly figure test on denied boarding functions.
+    test_fares_not_none(): Perform non none test on fares functions.
+    test_fares_plotly_fig(): Perform plotly figure test on fares functions.
     """
     def test_fares_not_none(self):
-        """Return the result of test for return value of none of denied boarding functions."""
+        """Return the result of test for return value of none of fares functions."""
         test_cases = [
             fares.avg_lh_sh_fares(),
             fares.prem_disc_by_year(),
@@ -40,7 +40,7 @@ class TestFares(unittest.TestCase):
             test(fig)
 
     def test_fares_plotly_fig(self):
-        """Return the result of plotly figure test of denied boarding functions."""
+        """Return the result of plotly figure test of fares functions."""
         test_cases = [
             fares.avg_lh_sh_fares(),
             fares.prem_disc_by_year(),
