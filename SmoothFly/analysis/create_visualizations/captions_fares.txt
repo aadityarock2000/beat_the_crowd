@@ -1,0 +1,23 @@
+"Travelers often like to get a sense of how much fares cost when flying. The goal of this dashboard
+ is to help users understand the cost of flying."
+
+avg_lh_sh_fares()
+"Here is a bar plot showing the costs of long and short haul flights over time. As expected,
+long haul flights are on average more expensive than short haul flights, but this plot can help
+the user begin to conceptualize how much more expensive long haul flights are to short haul flights."
+
+prem_disc_by_year()
+"Here is a bar plot showing the premium discounts of long and short haul flights over time. Usually they
+range from 0-5% every year, but in 2017 there was a significant discount offered for both long and short 
+haul flights. One factor that may have caused this were lower fuel costs that airlines experienced, which
+allowed for airlines to add flights that otherwise would have been unprofitable, which in turn lower costs."
+
+avg_fare_by_city()
+"Here is an area plot showing the average fare for all flights departing from a city. The user can select
+their city of choice using the dropdown menu and observe the trends in the average fare of flights from 
+that city over time."
+
+pct_by_avg_fare()
+"Here is an area plot showing the percent of passengers flying long and short haul flight against the
+average fare across all flights. The user can select for their year of interest with the dropdown menu
+and observe the trends of people flying long and short haul flights."
