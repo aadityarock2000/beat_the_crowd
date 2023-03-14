@@ -1,0 +1,21 @@
+"Having your flight delayed can certainly be an inconvenience for travelers. The goal
+of this dashboard is to observe the common causes of flights and the airlines that they affect."
+
+create_delay_ranking()
+"Here is a table of the airline carriers that experiences delays from 2003 - 2022.
+As you can see, each airline carrier is ranked by the proportion of delays they experience
+during this time period."
+
+create_delay_ct_breakdown()
+"Here is a pie chart breaking down the individual causes of delays for all flights during
+2003 - 2022. Users can use the dropdown menu to select for the years they would like to 
+view the pie chart."
+
+create_delay_min_breakdown()
+"Here is a pie chart breaking down the delay time for all delayed flights in minutes by
+each individual cause of delay. This pie chart serves to provide the user with a first look
+as to the severity each cause contributes to delayed flights per year."
+
+pct_delays_by_carrier()
+"Here is a bar plot extending the ranked table shown previously. This shows the percent of total
+delays experienced by each carrier for the year the user wants to observe."
