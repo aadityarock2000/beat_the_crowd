@@ -147,6 +147,22 @@ def initialPage():
     r=s.get(url,headers=headers, verify=False)
     getMasterData(r)
 
+
+# Function to modify data to get a downloadable CSV from BTS.gov. Resets the data back for next airline/airport
+def getAirportCSV():
+    global s
+    global headers
+    global data
+    global url
+    data['__EVENTTARGET']    = 'DL_CSV'
+    data['__EVENTARGUMENT']    = ''
+    del data['btnSubmit']
+    r = s.post(url,headers=headers, data=data,verify=False)
+    data['__EVENTTARGET']    = ''
+    data['__EVENTARGUMENT']    = ''
+    data['btnSubmit'] = 'Submit'
+    return r
+
 def extract_main(path):
     global headers
     global s
