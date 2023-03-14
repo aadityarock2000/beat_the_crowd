@@ -46,8 +46,6 @@ with tabs[0]:
     This website consists of 2 parts.
     1. A broad analysis on the airport scenario and quick insights
     2. The pipeline - You can select your Arrival airport, Departure airport, date range among other options to get the list of all direct flights from the departure to the arrival airport with the selected parameters. You can use this to conduct your own further analysis.
-
-    We give you the option to work on multiple fire formats like Excel, CSV and SQL Database.
     
     """)
 
@@ -63,18 +61,20 @@ with tabs[1]:
 
     with col1:
         # Create searchable dropdowns for the source airport and destination airport
-        source_airport = st.multiselect('Source Airport', options=airports)
+        source_airport = st.multiselect('Source Airport', options=airports, default='All')
         from_date = st.date_input('From', datetime.date.today() - datetime.timedelta(days=365))
         PATH='website_utils/reference_data/airport_carrier_codes_reference.csv'
         carrier= st.multiselect('Airline Carrier',
                                 options=departure_input_data.
-                                carrier_list(PATH))
+                                carrier_list(PATH),default='All')
 
     with col2:
         # Create input fields for the date range
-        destination_airport = st.multiselect('Destination Airport', options=airports)
+        destination_airport = st.multiselect('Destination Airport', options=airports,
+                                             default='All')
         to_date = st.date_input('To', datetime.date.today())
-        file_format=st.selectbox('File Format',options=departure_input_data.file_types(), index=0)
+        file_format=st.selectbox('File Format',options=departure_input_data.file_types(),
+                                 index=0)
 
 
     dummy1, dummy2,dummy3=st.columns([4,5,1])
