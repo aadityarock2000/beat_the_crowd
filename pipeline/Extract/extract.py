@@ -114,6 +114,12 @@ def reset():
     'btnSubmit': 'Submit'
     }
 
+        
+def updateState(soup):  
+    data['__VIEWSTATE']          = soup.find('input', attrs={'id': '__VIEWSTATE'})['value']
+    data['__VIEWSTATEGENERATOR'] = soup.find('input', attrs={'id': '__VIEWSTATEGENERATOR'})['value']
+    data['__EVENTVALIDATION']    = soup.find('input', attrs={'id': '__EVENTVALIDATION'})['value']   
+
 # Extract master data of all airports and airlines from the initial page
 def getMasterData(r):
     
@@ -123,6 +129,7 @@ def getMasterData(r):
     airports.clear()
     
     soup = BeautifulSoup(r.content, 'html.parser')
+    updateState(soup)
     
     airportsList = soup.findAll('select', attrs={'id':'cboAirport','name':'cboAirport'})[0].findAll('option')
     for air in airportsList:        
@@ -132,6 +139,7 @@ def getMasterData(r):
     for air in airlinesList:        
         airlines.append(air['value'])
         
+    
 
 # Get the initial page 
 def initialPage():
