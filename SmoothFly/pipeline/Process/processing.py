@@ -12,9 +12,6 @@
         process_csv(name, csv):
             Processes flight data in a CSV file to a standardized format.
 
-        write_file_to_csv(path, file_name, file):
-            Writes a pandas DataFrame to a CSV file in the given path.
-
         processing_main():
             Reads a list of CSV files in the given path, processes each CSV file and writes the 
             processed data to a new CSV file.
@@ -35,6 +32,12 @@ def process_csv(name, csv):
     pandas.DataFrame: The modified DataFrame object, where certain columns have been renamed, 
     deleted or added.
     """
+
+    if not isinstance(csv,pd.DataFrame):
+        return csv
+
+    if 'Destination Airport' not in csv.columns:
+        return csv
 
     name = name.split('.')[0]
     csv['source'] = name
@@ -94,22 +97,6 @@ def process_csv(name, csv):
 
     return csv[(csv['flightNumber'] != 'Flight Number')]
 
-
-def write_file_to_csv(path, file_name, file):
-    """
-    Writes a pandas DataFrame to a CSV file in the given path.
-
-    Args:
-        path (str): The path to the directory where the CSV file will be written.
-        file_name (str): The name of the CSV file to be written.
-        file (pd.DataFrame): The pandas DataFrame to be written to the CSV file.
-
-    Returns:
-        None
-    """
-    file.to_csv(path+'/'+file_name, index=False)
-
-
 def processing_main(path):
     """
     Reads a list of CSV files in the given path, processes each CSV file and writes the 
@@ -130,8 +117,7 @@ def processing_main(path):
             if ext == 'csv':
                 csv = pd.read_csv(path+'/'+file)
                 csv = process_csv(str(file), csv)
-                write_file_to_csv(path, file, csv)
-
+                csv.to_csv(path+'/'+file, index=False)
 
 if __name__ == "__main__":
     PATH = '../../data/pipeline_data'
