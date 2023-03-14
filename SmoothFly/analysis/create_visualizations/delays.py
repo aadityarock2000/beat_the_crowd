@@ -23,7 +23,7 @@ def create_table():
 
     # We'll load in our Delay dataset
 
-    delays = pd.read_csv('..\\raw_data\\Airline_Delay_Cause_2003_2022.csv')
+    delays = pd.read_csv('analysis\\raw_data\\Airline_Delay_Cause_2003_2022.csv')
 
     delays = delays[delays['airport'] == 'SEA']
 
