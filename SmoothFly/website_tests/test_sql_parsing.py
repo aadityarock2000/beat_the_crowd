@@ -10,7 +10,7 @@ data files to populate SQL queries.
 import unittest
 import datetime
 import sys
-import pyodbc
+
 sys.path.append("./SmoothFly/website_utils")
 from website_utils.sql_parsing import fetch_airport_code, fetch_carrier_code, input_preparation # pylint: disable=wrong-import-position, import-error
 from website_utils.sql_parsing import create_query_string # pylint: disable=wrong-import-position, import-error
@@ -269,14 +269,14 @@ class TestCreateQueryString(unittest.TestCase):
 #     Methods
 #     -------
 #     test_connection_string()
-#         Test that the connection string is created properly and that a pyodbc Connection 
+#         Test that the connection string is created properly and that a pyodbc Connection
 #         object is returned.
 #     test_cursor()
 #         Test that a pyodbc Cursor object is returned by the connection.
 #     '''
 #     def test_connection_string(self):
 #         """
-#         Test that the connection string is created properly and that a pyodbc 
+#         Test that the connection string is created properly and that a pyodbc
 #         Connection object is returned.
 #         """
 #         cnxn = connect_sql_server()
