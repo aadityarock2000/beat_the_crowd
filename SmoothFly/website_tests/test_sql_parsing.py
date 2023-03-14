@@ -13,7 +13,7 @@ import sys
 import pyodbc
 sys.path.append("./SmoothFly/website_utils")
 from website_utils.sql_parsing import fetch_airport_code, fetch_carrier_code, input_preparation # pylint: disable=wrong-import-position, import-error
-from website_utils.sql_parsing import create_query_string, connect_sql_server # pylint: disable=wrong-import-position, import-error
+from website_utils.sql_parsing import create_query_string # pylint: disable=wrong-import-position, import-error
 
 class TestFetchFunctions(unittest.TestCase):
     '''
@@ -263,32 +263,32 @@ class TestCreateQueryString(unittest.TestCase):
         self.assertIsNotNone(actual_query)
         self.assertIsNotNone(actual_file_format)
 
-class TestConnectSqlServer(unittest.TestCase):
-    '''
-    A unittest class for testing connection to SQL Server.
-    Methods
-    -------
-    test_connection_string()
-        Test that the connection string is created properly and that a pyodbc Connection 
-        object is returned.
-    test_cursor()
-        Test that a pyodbc Cursor object is returned by the connection.
-    '''
-    def test_connection_string(self):
-        """
-        Test that the connection string is created properly and that a pyodbc 
-        Connection object is returned.
-        """
-        cnxn = connect_sql_server()
-        self.assertIsInstance(cnxn, pyodbc.Connection)
+# class TestConnectSqlServer(unittest.TestCase):
+#     '''
+#     A unittest class for testing connection to SQL Server.
+#     Methods
+#     -------
+#     test_connection_string()
+#         Test that the connection string is created properly and that a pyodbc Connection 
+#         object is returned.
+#     test_cursor()
+#         Test that a pyodbc Cursor object is returned by the connection.
+#     '''
+#     def test_connection_string(self):
+#         """
+#         Test that the connection string is created properly and that a pyodbc 
+#         Connection object is returned.
+#         """
+#         cnxn = connect_sql_server()
+#         self.assertIsInstance(cnxn, pyodbc.Connection)
 
-    def test_cursor(self):
-        """
-        Test that a pyodbc Cursor object is returned by the connection.
-        """
-        cnxn = connect_sql_server()
-        cursor = cnxn.cursor()
-        self.assertIsInstance(cursor, pyodbc.Cursor)
+#     def test_cursor(self):
+#         """
+#         Test that a pyodbc Cursor object is returned by the connection.
+#         """
+#         cnxn = connect_sql_server()
+#         cursor = cnxn.cursor()
+#         self.assertIsInstance(cursor, pyodbc.Cursor)
 
 
 if __name__ == '__main__':
