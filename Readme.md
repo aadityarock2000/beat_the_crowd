@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/aadityarock2000/beat_the_crowd/badge.svg?branch=main)](https://coveralls.io/github/aadityarock2000/beat_the_crowd?branch=main)
+
 # Beat The Crowd!
 
 ## Project Type: 
