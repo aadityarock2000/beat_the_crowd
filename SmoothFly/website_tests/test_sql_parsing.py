@@ -12,8 +12,8 @@ import datetime
 import sys
 import pyodbc
 sys.path.append("./SmoothFly/website_utils")
-from sql_parsing import fetch_airport_code, fetch_carrier_code, input_preparation # pylint: disable=wrong-import-position, import-error
-from sql_parsing import create_query_string, connect_sql_server # pylint: disable=wrong-import-position, import-error
+from website_utils.sql_parsing import fetch_airport_code, fetch_carrier_code, input_preparation # pylint: disable=wrong-import-position, import-error
+from website_utils.sql_parsing import create_query_string, connect_sql_server # pylint: disable=wrong-import-position, import-error
 
 class TestFetchFunctions(unittest.TestCase):
     '''
