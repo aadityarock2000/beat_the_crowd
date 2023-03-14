@@ -52,7 +52,7 @@ def create_delay_ranking():
     sea_delays = delays[delays['airport'] == 'SEA']
     test = sea_delays.sort_values(['carrier_name',
                                    'perc_total_delays']).groupby('carrier_name').head()
-    test = test.groupby(['carrier_name']).mean().reset_index()
+    test = test.groupby(['carrier_name']).mean(numeric_only = True).reset_index()
     test['Delay Rank'] = test['perc_total_delays'].rank(ascending=False)
     test = test.loc[:, ['carrier_name', 'perc_total_delays',
                         'Delay Rank']].sort_values('Delay Rank', ascending=True)
