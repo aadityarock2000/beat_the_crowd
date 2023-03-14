@@ -155,7 +155,6 @@ dependencies:
   - pyrsistent=0.18.0=py310h2bbff1b_0
   - pysocks=1.7.1=py310haa95532_0
   - pyspark=3.2.1=py310haa95532_0
-  - pytest=7.2.2
   - python=3.10.9=h966fe2a_1
   - python-dateutil=2.8.2=pyhd3eb1b0_0
   - python-fastjsonschema=2.16.2=py310haa95532_0
@@ -221,6 +220,7 @@ dependencies:
     - findspark==2.0.1
     - patsy==0.5.3
     - plotly-express==0.4.1
+    - pytest==7.2.2
     - qtconsole==5.4.0
     - scipy==1.10.1
     - statsmodels==0.13.5
