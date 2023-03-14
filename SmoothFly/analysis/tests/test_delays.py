@@ -7,7 +7,7 @@ Created on Sun Mar 12 21:14:51 2023
 
 import unittest
 import sys
-sys.path.append('../create_visualizations')
+sys.path.append('analysis/create_visualizations')
 # importing the hello
 import delays
 
@@ -16,7 +16,7 @@ class TestDelays(unittest.TestCase):
     # Smoke Test
             
     def test_plot_smoke(self):
-        delays.creat_delay_ranking()
+        delays.create_delay_ranking()
         self.assertTrue(True)
         
     def test_plot_smoke2(self):
