@@ -286,6 +286,8 @@ def extract_main(path):
         query_aspx(airport, path,session)
         PROCESSED.append(airport)
 
+    session.close()
+
 
 if __name__ == "__main__":
     PROCESSED = []
