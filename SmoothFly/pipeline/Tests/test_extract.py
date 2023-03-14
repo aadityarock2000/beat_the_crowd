@@ -17,8 +17,8 @@ import sys
 import unittest
 import requests
 #pylint: disable=wrong-import-position
-sys.path.append("../Extract")
-from extract import get_airport_csv, initial_page
+sys.path.append("pipeline/Extract")
+import extract
 #pylint: disable=wrong-import-position
 
 class TestExtractCSV(unittest.TestCase):
@@ -35,7 +35,7 @@ class TestExtractCSV(unittest.TestCase):
         """
         session = requests.Session()
         assert session is not None
-        response = initial_page(session)
+        response = extract.initial_page(session)
         print(response)
         assert response is None
 
@@ -46,7 +46,7 @@ class TestExtractCSV(unittest.TestCase):
         """
         session = requests.Session()
         assert session is not None
-        result = get_airport_csv(session)
+        result = extract.get_airport_csv(session)
         assert result is None
 
 if __name__ == '__main__':
