@@ -93,6 +93,10 @@ jobs:
         run: |
           pylint SmoothFly/analysis/*.py
 
+      - name: Lint with whitelisting
+        run: |
+          pylint --extension-pkg-allow-list=pyodbc SmoothFly/pipeline/*.py
+
       # Next step: run the unit tests with code coverage.
       - name: Unit tests
         run: |
