@@ -17,7 +17,7 @@ def airport_list():
     Returns the list of airports that are in the reference files for airports_list.txt
     '''
     airport_code_reference=pd.read_csv('website_utils/reference_data/airport_codes_reference.csv')
-    airports=list(airport_code_reference['Airport_name'])
+    airports=['All']+list(airport_code_reference['Airport_name'])
     return airports
 
 def carrier_list():
@@ -26,7 +26,7 @@ def carrier_list():
     '''
     file='website_utils/reference_data/airport_carrier_codes_reference.csv'
     airport_carrier_codes_reference=pd.read_csv(file)
-    carriers=list(airport_carrier_codes_reference['Carrier_name'])
+    carriers=['All']+list(airport_carrier_codes_reference['Carrier_name'])
     return carriers
 
 def file_types():

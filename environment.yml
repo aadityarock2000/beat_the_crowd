@@ -1,4 +1,4 @@
-name: environment.yml
+name: beat_the_crowd
 channels:
   - plotly
   - defaults
@@ -33,9 +33,10 @@ dependencies:
   - plotly_express=0.4.0=py_0
   - pooch=1.4.0=pyhd3eb1b0_0
   - pycparser=2.21=pyhd3eb1b0_0
+  - pylint
   - pyopenssl=23.0.0=py310haa95532_0
   - pysocks=1.7.1=py310haa95532_0
-  - python=3.10.9=h966fe2a_2
+  - python=3
   - python-dateutil=2.8.2=pyhd3eb1b0_0
   - pytz=2022.7=py310haa95532_0
   - requests=2.28.1=py310haa95532_0
@@ -55,4 +56,4 @@ dependencies:
   - wincertstore=0.2=py310haa95532_2
   - xz=5.2.10=h8cc25b3_1
   - zlib=1.2.13=h8cc25b3_0
-prefix: C:\Users\franc\miniconda3\envs\environment.yml
+
