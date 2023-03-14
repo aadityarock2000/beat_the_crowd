@@ -1,3 +1,5 @@
+import requests
+
 # Global Data Template
 def reset():
     global headers
@@ -111,3 +113,21 @@ def reset():
     'btnSubmit': 'Submit'
     }
 
+# Get the initial page 
+def initialPage():
+    global s
+    r=s.get(url,headers=headers, verify=False)
+    print(r.content)
+
+def extract_main(path):
+    global headers
+    global s
+    global airports
+    reset()
+    s = requests.Session()
+    s.headers.update(headers)
+    initialPage()
+    
+if __name__ == "__main__":
+    PATH = '../../data/pipeline_data'
+    extract_main(PATH)
