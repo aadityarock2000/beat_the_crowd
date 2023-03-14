@@ -24,7 +24,7 @@ class TestFetchFunctions(unittest.TestCase):
         Test if the function `fetch_airport_code` correctly retrieves airport codes 
         given airport names.
         '''
-        path = '../website_utils/reference_data/airport_codes_reference.csv'
+        path = 'website_utils/reference_data/airport_codes_reference.csv'
         self.\
         assertEqual(
             fetch_airport_code("Los Angeles, CA: Los Angeles International (LAX)", path), 'LAX')
@@ -34,7 +34,7 @@ class TestFetchFunctions(unittest.TestCase):
         Test if the function `fetch_airport_code` correctly retrieves airport codes 
         given airport names.
         '''
-        path = '../website_utils/reference_data/airport_codes_reference.csv'
+        path = 'website_utils/reference_data/airport_codes_reference.csv'
         self.assertEqual(fetch_airport_code
                          ("Chicago, IL: Chicago O 'Hare International (ORD)", path), 'ORD')
     def test_fetch_airport_code_edge_empty_input(self):
@@ -42,7 +42,7 @@ class TestFetchFunctions(unittest.TestCase):
         Test if the function `fetch_airport_code` raises an error when passed an empty 
         string as an argument.
         '''
-        path = '../website_utils/reference_data/airport_codes_reference.csv'
+        path = 'website_utils/reference_data/airport_codes_reference.csv'
         with self.assertRaises(ValueError):
             fetch_airport_code('', path)
 
@@ -51,7 +51,7 @@ class TestFetchFunctions(unittest.TestCase):
         Test if the function `fetch_airport_code` raises an error when passed a 
         nonexistent airport name.
         '''
-        path = '../website_utils/reference_data/airport_codes_reference.csv'
+        path = 'website_utils/reference_data/airport_codes_reference.csv'
         with self.assertRaises(ValueError):
             fetch_airport_code('Nonexistent Airport', path)
 
@@ -60,7 +60,7 @@ class TestFetchFunctions(unittest.TestCase):
         Test if the function `fetch_airport_code` raises an error when passed an 
         empty reference data file.
         '''
-        path = '../website_utils/reference_data/empty_file.csv'
+        path = 'website_utils/reference_data/empty_file.csv'
         with self.assertRaises(ValueError):
             fetch_airport_code('Chicago O\'Hare International Airport', path)
 
@@ -69,7 +69,7 @@ class TestFetchFunctions(unittest.TestCase):
         Test if the function `fetch_carrier_code` correctly retrieves carrier codes 
         given carrier names.
         '''
-        path = '../website_utils/reference_data/airport_carrier_codes_reference.csv'
+        path = 'website_utils/reference_data/airport_carrier_codes_reference.csv'
         self.assertEqual(fetch_carrier_code('Delta Airlines Inc. (DL)', path), 'DL')
 
     def test_fetch_carrier_code_one_shot(self):
@@ -77,7 +77,7 @@ class TestFetchFunctions(unittest.TestCase):
         Test if the function `fetch_carrier_code` correctly retrieves carrier codes 
         given carrier names.
         '''
-        path = '../website_utils/reference_data/airport_carrier_codes_reference.csv'
+        path = 'website_utils/reference_data/airport_carrier_codes_reference.csv'
         self.assertEqual(fetch_carrier_code('Southwest Airlines Co. (WN)', path), 'WN')
 
     def test_fetch_carrier_code_edge_empty_input(self):
@@ -85,7 +85,7 @@ class TestFetchFunctions(unittest.TestCase):
         Test if the function `fetch_carrier_code` raises an error when passed an 
         empty string as an argument.
         '''
-        path = '../website_utils/reference_data/airport_carrier_codes_reference.csv'
+        path = 'website_utils/reference_data/airport_carrier_codes_reference.csv'
         with self.assertRaises(ValueError):
             fetch_carrier_code('', path)
 
@@ -94,7 +94,7 @@ class TestFetchFunctions(unittest.TestCase):
         Test if the function `fetch_carrier_code` raises an error when passed a 
         nonexistent carrier name.
         '''
-        path = '../website_utils/reference_data/airport_carrier_codes_reference.csv'
+        path = 'website_utils/reference_data/airport_carrier_codes_reference.csv'
         with self.assertRaises(ValueError):
             fetch_carrier_code('Nonexistent Carrier', path)
 
@@ -105,7 +105,7 @@ class TestFetchFunctions(unittest.TestCase):
         reference data file. The function should raise a ValueError exception, 
         because it can't find the requested carrier in an empty file."""
         # Edge Test 3: empty reference data file
-        path = '../website_utils/reference_data/empty_file.csv'
+        path = 'website_utils/reference_data/empty_file.csv'
         with self.assertRaises(ValueError):
             fetch_carrier_code('Delta Air Lines, Inc.', path)
 
@@ -126,8 +126,8 @@ class TestInputPreparation(unittest.TestCase):
         
         Raises an AssertionError if the returned output does not match the expected output.
         """
-        path='../website_utils/reference_data/airport_codes_reference.csv'
-        car_path='../website_utils/reference_data/airport_carrier_codes_reference.csv'
+        path='website_utils/reference_data/airport_codes_reference.csv'
+        car_path='website_utils/reference_data/airport_carrier_codes_reference.csv'
         inputs = {
             'source_airport': ['Los Angeles, CA: Los Angeles International (LAX)'],
             'destination_airport': ["Chicago, IL: Chicago O 'Hare International (ORD)"],
@@ -154,8 +154,8 @@ class TestInputPreparation(unittest.TestCase):
         
         Raises an AssertionError if the returned output does not match the expected output.
         """
-        path='../website_utils/reference_data/airport_codes_reference.csv'
-        car_path='../website_utils/reference_data/airport_carrier_codes_reference.csv'
+        path='website_utils/reference_data/airport_codes_reference.csv'
+        car_path='website_utils/reference_data/airport_carrier_codes_reference.csv'
         inputs = {
             'source_airport': ['All'],
             'destination_airport': ['All'],
@@ -181,8 +181,8 @@ class TestInputPreparation(unittest.TestCase):
         Sets up input data for a flight search request with empty values for all fields,
         invokes input_preparation, and raises a ValueError because empty inputs are invalid.
         """
-        path='../website_utils/reference_data/airport_codes_reference.csv'
-        car_path='../website_utils/reference_data/airport_carrier_codes_reference.csv'
+        path='website_utils/reference_data/airport_codes_reference.csv'
+        car_path='website_utils/reference_data/airport_carrier_codes_reference.csv'
         inputs = {
             'source_airport': [],
             'destination_airport': [],
