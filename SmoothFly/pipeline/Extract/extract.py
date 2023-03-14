@@ -202,6 +202,7 @@ def initial_page(session):
     if session is None or HEADERS is None:
         return None
     else:
+        session.headers.update(HEADERS)
         logging.debug('### Inside Initial Call')
         response = session.get(URL, headers=HEADERS, verify=False)
         get_master_data(response)
@@ -274,7 +275,6 @@ def extract_main(path):
         None.
     """
     session = requests.Session()
-    session.headers.update(HEADERS)
     initial_page(session)
     for i in PROCESSED:
         try:
