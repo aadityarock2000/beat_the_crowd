@@ -205,6 +205,7 @@ def initial_page(session):
         response = session.get(URL, headers=HEADERS, verify=False)
         get_master_data(response)
         logging.debug('### Outside Initial Call')
+        return response
 
 
 def get_airport_csv(session):

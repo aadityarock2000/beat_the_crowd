@@ -36,8 +36,7 @@ class TestExtractCSV(unittest.TestCase):
         session = requests.Session()
         assert session is not None
         response = extract.initial_page(session)
-        print(response)
-        assert response is None
+        assert response is not None
 
     def test_get_airport_csv_smoke(self):
         """

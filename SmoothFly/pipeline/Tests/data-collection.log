@@ -38,3 +38,21 @@ DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "GET /ontime/depa
 DEBUG:root:### Inside Master Call
 DEBUG:root:### Outside Master Call
 DEBUG:root:### Outside Initial Call
+DEBUG:root:### Inside Initial Call
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transtats.bts.gov:443
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "GET /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:root:### Inside Master Call
+DEBUG:root:### Outside Master Call
+DEBUG:root:### Outside Initial Call
+DEBUG:root:### Inside Initial Call
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transtats.bts.gov:443
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "GET /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:root:### Inside Master Call
+DEBUG:root:### Outside Master Call
+DEBUG:root:### Outside Initial Call
+DEBUG:root:### Inside Initial Call
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transtats.bts.gov:443
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "GET /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:root:### Inside Master Call
+DEBUG:root:### Outside Master Call
+DEBUG:root:### Outside Initial Call
