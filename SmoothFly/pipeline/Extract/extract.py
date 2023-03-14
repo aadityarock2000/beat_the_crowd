@@ -1,5 +1,6 @@
 """
-    The module collects data on flight departures and logs them into a file. It uses the requests and BeautifulSoup libraries for web scraping and logging library for logging.
+    The module collects data on flight departures and logs them into a file. It uses the requests 
+    and BeautifulSoup libraries for web scraping and logging library for logging.
 
     It defines the following global variables:
 
@@ -28,7 +29,8 @@ logging.basicConfig(filename='data-collection.log',
 
 URL = 'https://www.transtats.bts.gov/ontime/departures.aspx'
 HEADERS = {'User-Agent':
-           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.50'}
+           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+           +'Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.50'}
 AIRPORTS = []
 AIRLINES = []
 DATA = {
@@ -204,6 +206,7 @@ def initial_page(session):
         response = session.get(URL, headers=HEADERS, verify=False)
         get_master_data(response)
         logging.debug('### Outside Initial Call')
+        return response
 
 
 def get_airport_csv(session):
@@ -284,8 +287,9 @@ def extract_main(path):
         query_aspx(airport, path,session)
         PROCESSED.append(airport)
 
+    session.close()
 
 if __name__ == "__main__":
     PROCESSED = []
-    PATH = '../../data/pipeline_data'
+    PATH = 'data/pipeline_data'
     extract_main(PATH)
