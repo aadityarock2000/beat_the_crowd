@@ -58,11 +58,13 @@ def input_preparation(inputs):
     else:
         for airport in inputs['destination_airport']:
             destination.append(fetch_airport_code(airport))
-    if 'All' in carrier:
+    if 'All' in inputs['carrier']:
         carrier = ['All']
     else:
         for car in inputs['carrier']:
             carrier.append(fetch_carrier_code(car))
+
+    
     #fetching the rest of the inputs
     from_date=inputs['from_date']
     to_date=inputs['to_date']
@@ -83,7 +85,7 @@ def create_query_string(parsed_inputs):
     '''
     Creates the query based on the inputs given, to be used in the SQL SERVER
     '''
-    table_name='airlines'
+    table_name='airline_stats'
     query = 'SELECT * FROM '+table_name+' WHERE '
     if parsed_inputs['source_airport'] != ['All']:
         string_=''
@@ -110,7 +112,10 @@ def create_query_string(parsed_inputs):
         dest_string='carrier in ('+string_+') AND '
         query+=dest_string
     #adding dates to the query
-    query +='date BETWEEN ? AND ?'
+
+    from_ = "'"+parsed_inputs['from_date'].strftime(r"%Y-%m-%d")+"'"
+    to_= "'"+parsed_inputs['to_date'].strftime(r"%Y-%m-%d")+"'"
+    query +='date BETWEEN '+from_+' AND '+to_+';'
 
     return query,parsed_inputs['from_date'],parsed_inputs['to_date'],parsed_inputs['file_format']
 
@@ -118,13 +123,13 @@ def connect_sql_server():
     '''
     Connect to a sql server
     '''
-    DRIVER_NAME = 'SQL SERVER'
-    SERVER_NAME = 'Sniperwolf'
-    DATABASE_NAME = 'DEMODB'
+    driver_name = 'SQL SERVER'
+    server_name = 'Sniperwolf'
+    database_name = 'airlines'
     connection_string=f"""
-        DRIVER={{{DRIVER_NAME}}};
-        SERVER={SERVER_NAME};
-        DATABASE={DATABASE_NAME};
+        DRIVER={{{driver_name}}};
+        SERVER={server_name};
+        DATABASE={database_name};
         Trust_Connection=yes;
     """
     cnxn = pyodbc.connect(connection_string)
@@ -136,21 +141,34 @@ def execute_code(cnxn,query,from_date,to_date,file_format):
     '''
     # Execute a SQL query
     cursor = cnxn.cursor()
-    cursor.execute(query, from_date, to_date)
-    # Retrieve the results
 
+
+
+    cursor.execute(query)
+    #cursor.execute('SELECT TOP 5 * FROM airline_stats;')
+    columns = [column[0] for column in cursor.description]
+    # Retrieve the results
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
 
     if file_format=='CSV':
-        results = cursor.fetchall()
-        # write the results to a StringIO buffer
-        csv_buffer = io.StringIO()
-        csv_writer = csv.writer(csv_buffer)
-        csv_writer.writerow([column[0] for column in cursor.description]) # write the headers
-        for row in results:
-            csv_writer.writerow(row)
-        # convert the buffer to a string and create a download button for the user
-        csv_string = csv_buffer.getvalue()
-        return csv_string
+        csv_file = io.StringIO()
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(columns)
+        csv_writer.writerows(rows)
+        return csv_file
+
+        # results = cursor.fetchall()
+        # # write the results to a StringIO buffer
+        # csv_buffer = io.StringIO()
+        # csv_writer = csv.writer(csv_buffer)
+        # csv_writer.writerow([column[0] for column in cursor.description]) # write the headers
+        # for row in results:
+        #     csv_writer.writerow(row)
+        # # convert the buffer to a string and create a download button for the user
+        # csv_string = csv_buffer.getvalue()
+        # return csv_string
     elif file_format=='Excel':
         # execute the query and create a DataFrame
         df = pd.read_sql(query, cnxn)
