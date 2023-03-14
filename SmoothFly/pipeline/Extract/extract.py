@@ -1,5 +1,6 @@
 """
-    The module collects data on flight departures and logs them into a file. It uses the requests and BeautifulSoup libraries for web scraping and logging library for logging.
+    The module collects data on flight departures and logs them into a file. It uses the requests 
+    and BeautifulSoup libraries for web scraping and logging library for logging.
 
     It defines the following global variables:
 
@@ -288,25 +289,7 @@ def extract_main(path):
 
     session.close()
 
-def update_data(path):
-    session = requests.Session()
-    session.headers.update(HEADERS)
-    initial_page(session)
-    for i in PROCESSED:
-        try:
-            AIRPORTS.remove(i)
-        except ValueError:
-            pass
-    print(AIRPORTS)
-    for airport in AIRPORTS:
-        logging.debug('### Processing for %s', airport)
-        query_aspx(airport, path,session)
-        PROCESSED.append(airport)
-
-    session.close()
-
-
 if __name__ == "__main__":
     PROCESSED = []
-    PATH = '../../data/pipeline_data'
+    PATH = 'data/pipeline_data'
     extract_main(PATH)

@@ -106,5 +106,5 @@ def loading_main(path) -> None:
                 insert_data(csv)
 
 if __name__ == "__main__":
-    PATH = '../../data/pipeline_data'
+    PATH = 'data/pipeline_data'
     loading_main(PATH)
