@@ -14,29 +14,44 @@ import pandas as pd
 import pyodbc
 
 
-def fetch_airport_code(airport):
+def fetch_airport_code(airport, path):
     '''
     Fetches the airport code for the given airport name
     '''
-    airport_reference=pd.read_csv('website_utils/reference_data/airport_codes_reference.csv')
-    #print(airport_reference[airport_reference['Airport_name']==airport]['Airport_code'])
-    code=airport_reference[airport_reference['Airport_name']==airport]['Airport_code'].item()
-    return code
+    if not airport:
+        raise ValueError("Airport name cannot be empty")
+    airport_reference = pd.read_csv(path)
+    airport_reference['Airport_name'] = airport_reference['Airport_name'].str.lower()
+    airport_reference['Airport_code'] = airport_reference['Airport_code'].str.upper()
+    code = airport_reference[airport_reference['Airport_name'] == airport.lower()]['Airport_code'].item()
+    return code if code else None
 
-def fetch_carrier_code(carrier):
+def fetch_carrier_code(carrier, path):
     '''
     Fetches the code for the given single carrier using the reference data
     '''
-    file = 'website_utils/reference_data/airport_carrier_codes_reference.csv'
-    carrier_reference=pd.read_csv(file)
-    code=carrier_reference[carrier_reference['Carrier_name']==carrier]['Carrier_code'].item()
-    return code
+    if not carrier:
+        raise ValueError("Carrier name cannot be empty")
+    carrier_reference = pd.read_csv(path)
+    carrier_reference['Carrier_name'] = carrier_reference['Carrier_name'].str.lower()
+    carrier_reference['Carrier_code'] = carrier_reference['Carrier_code'].str.upper()
+    code = carrier_reference[carrier_reference['Carrier_name'] == carrier.lower()]['Carrier_code'].item()
+    return code if code else None
 
-def input_preparation(inputs):
+
+    # carrier_reference=pd.read_csv(path)
+    # code=carrier_reference[carrier_reference['Carrier_name']==carrier]['Carrier_code'].item()
+    # return code
+
+def input_preparation(inputs,path,car_path):
     '''
     Parses the input from the user in the website, and prepares it for parsing in SQL
     '''
     #print(inputs)
+    if not inputs['source_airport'] or not inputs['destination_airport'] or not inputs['carrier'] \
+            or not inputs['from_date'] or not inputs['to_date'] or not inputs['file_format']:
+        raise ValueError('All fields are required.')
+
 
     source = []
     destination = []
@@ -52,17 +67,17 @@ def input_preparation(inputs):
         source = ['All']
     else:
         for airport in inputs['source_airport']:
-            source.append(fetch_airport_code(airport))
+            source.append(fetch_airport_code(airport,path))
     if 'All' in inputs['destination_airport']:
         destination = ['All']
     else:
         for airport in inputs['destination_airport']:
-            destination.append(fetch_airport_code(airport))
+            destination.append(fetch_airport_code(airport,path))
     if 'All' in inputs['carrier']:
         carrier = ['All']
     else:
         for car in inputs['carrier']:
-            carrier.append(fetch_carrier_code(car))
+            carrier.append(fetch_carrier_code(car,car_path))
 
     #fetching the rest of the inputs
     from_date=inputs['from_date']
@@ -143,8 +158,8 @@ def execute_code(cnxn,query,file_format):
 
 
 
-    #cursor.execute(query)
-    cursor.execute('SELECT TOP 5 * FROM airline_stats;')
+    cursor.execute(query)
+    #cursor.execute('SELECT TOP 5 * FROM airline_stats;')
     columns = [column[0] for column in cursor.description]
     # Retrieve the results
     rows = cursor.fetchall()
