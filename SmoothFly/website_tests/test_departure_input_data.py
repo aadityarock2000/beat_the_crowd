@@ -4,7 +4,7 @@ input to the streamlit app for selection.
 """
 import unittest
 import sys
-sys.path.append("../website_utils")
+sys.path.append("SmoothFly/website_utils")
 from departure_input_data import airport_list, carrier_list, file_types # pylint: disable=wrong-import-position, import-error
 
 class TestAirportList(unittest.TestCase):
