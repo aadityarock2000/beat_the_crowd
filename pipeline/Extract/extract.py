@@ -1,4 +1,5 @@
 import requests
+from bs4 import BeautifulSoup
 
 # Global Data Template
 def reset():
@@ -113,11 +114,30 @@ def reset():
     'btnSubmit': 'Submit'
     }
 
+# Extract master data of all airports and airlines from the initial page
+def getMasterData(r):
+    
+    global airports
+    global airlines
+    airlines.clear()
+    airports.clear()
+    
+    soup = BeautifulSoup(r.content, 'html.parser')
+    
+    airportsList = soup.findAll('select', attrs={'id':'cboAirport','name':'cboAirport'})[0].findAll('option')
+    for air in airportsList:        
+        airports.append(air['value'])
+    
+    airlinesList = soup.findAll('select', attrs={'id':'cboAirline','name':'cboAirline'})[0].findAll('option')
+    for air in airlinesList:        
+        airlines.append(air['value'])
+        
+
 # Get the initial page 
 def initialPage():
     global s
     r=s.get(url,headers=headers, verify=False)
-    print(r.content)
+    getMasterData(r)
 
 def extract_main(path):
     global headers
