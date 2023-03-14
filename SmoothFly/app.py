@@ -57,16 +57,18 @@ with tabs[1]:
     st.write('Select your data of interest and the file format that you require')
 
     # Define the list of airports
-    airports=departure_input_data.airport_list('website_utils/reference_data/airport_codes_reference.csv')
+    PATH_='website_utils/reference_data/airport_codes_reference.csv'
+    airports=departure_input_data.airport_list(PATH_)
     col1, col2= st.columns(2)
 
     with col1:
         # Create searchable dropdowns for the source airport and destination airport
         source_airport = st.multiselect('Source Airport', options=airports)
         from_date = st.date_input('From', datetime.date.today() - datetime.timedelta(days=365))
+        PATH='website_utils/reference_data/airport_carrier_codes_reference.csv'
         carrier= st.multiselect('Airline Carrier',
                                 options=departure_input_data.
-                                carrier_list('website_utils/reference_data/airport_carrier_codes_reference.csv'))
+                                carrier_list(PATH))
 
     with col2:
         # Create input fields for the date range
@@ -87,10 +89,10 @@ with tabs[1]:
                     'to_date':to_date,
                     'carrier':carrier
                     }
-            path='website_utils/reference_data/airport_codes_reference.csv'
-            car_path='website_utils/reference_data/airport_carrier_codes_reference.csv'
-            parsed_inputs = sql_parsing.input_preparation(inputs=inputs,path=path,
-                                                          car_path=car_path)
+            PATH='website_utils/reference_data/airport_codes_reference.csv'
+            CAR_PATH='website_utils/reference_data/airport_carrier_codes_reference.csv'
+            parsed_inputs = sql_parsing.input_preparation(inputs=inputs,path=PATH,
+                                                          car_path=CAR_PATH)
             query,file_format=sql_parsing.\
                               create_query_string(parsed_inputs = parsed_inputs)
             print(query,file_format)

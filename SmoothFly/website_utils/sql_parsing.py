@@ -23,8 +23,8 @@ def fetch_airport_code(airport, path):
     airport_reference = pd.read_csv(path)
     airport_reference['Airport_name'] = airport_reference['Airport_name'].str.lower()
     airport_reference['Airport_code'] = airport_reference['Airport_code'].str.upper()
-    code = airport_reference[airport_reference['Airport_name'] == airport.lower()]['Airport_code'].item()
-    return code if code else None
+    cod=airport_reference[airport_reference['Airport_name']==airport.lower()]['Airport_code'].item()
+    return cod if cod else None
 
 def fetch_carrier_code(carrier, path):
     '''
@@ -35,8 +35,8 @@ def fetch_carrier_code(carrier, path):
     carrier_reference = pd.read_csv(path)
     carrier_reference['Carrier_name'] = carrier_reference['Carrier_name'].str.lower()
     carrier_reference['Carrier_code'] = carrier_reference['Carrier_code'].str.upper()
-    code = carrier_reference[carrier_reference['Carrier_name'] == carrier.lower()]['Carrier_code'].item()
-    return code if code else None
+    cod=carrier_reference[carrier_reference['Carrier_name']==carrier.lower()]['Carrier_code'].item()
+    return cod if cod else None
 
 
     # carrier_reference=pd.read_csv(path)
@@ -174,16 +174,6 @@ def execute_code(cnxn,query,file_format):
         cnxn.close()
         return csv_file
 
-        # results = cursor.fetchall()
-        # # write the results to a StringIO buffer
-        # csv_buffer = io.StringIO()
-        # csv_writer = csv.writer(csv_buffer)
-        # csv_writer.writerow([column[0] for column in cursor.description]) # write the headers
-        # for row in results:
-        #     csv_writer.writerow(row)
-        # # convert the buffer to a string and create a download button for the user
-        # csv_string = csv_buffer.getvalue()
-        # return csv_string
     elif file_format=='Excel':
         # execute the query and create a DataFrame
         data1 = pd.DataFrame(rows, columns=columns)
