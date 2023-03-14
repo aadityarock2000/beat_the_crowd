@@ -45,7 +45,7 @@ def init_table() -> None:
     """
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("drop table airline_stats")
+    # cursor.execute("drop table airline_stats") # Uncomment if required
     cursor.execute("""CREATE TABLE airline_stats ( source VARCHAR(255), destination VARCHAR(255),
     carrier VARCHAR(255), date DATE, flightNumber VARCHAR(255), 
     scheduledDepartureTime VARCHAR(255), actualDepartureTime VARCHAR(255), 
