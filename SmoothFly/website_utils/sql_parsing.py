@@ -118,13 +118,13 @@ def connect_sql_server():
     '''
     Connect to a sql server
     '''
-    DRIVER_NAME = 'SQL SERVER'
-    SERVER_NAME = 'Sniperwolf'
-    DATABASE_NAME = 'DEMODB'
+    driver_name = 'SQL SERVER'
+    server_name = 'Sniperwolf'
+    datebase_name = 'DEMODB'
     connection_string=f"""
-        DRIVER={{{DRIVER_NAME}}};
-        SERVER={SERVER_NAME};
-        DATABASE={DATABASE_NAME};
+        DRIVER={{{driver_name}}};
+        SERVER={server_name};
+        DATABASE={datebase_name};
         Trust_Connection=yes;
     """
     cnxn = pyodbc.connect(connection_string)
@@ -151,19 +151,17 @@ def execute_code(cnxn,query,from_date,to_date,file_format):
         # convert the buffer to a string and create a download button for the user
         csv_string = csv_buffer.getvalue()
         return csv_string
-    elif file_format=='Excel':
-        # execute the query and create a DataFrame
-        df = pd.read_sql(query, cnxn)
-        # create an Excel file from the DataFrame
-        excel_file = io.BytesIO()
-        writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Sheet1', index=False)
-        writer.save()
-        excel_file.seek(0)
-        return excel_file
-    else:
-        df = pd.read_sql(query, cnxn)
-        return df
-    
+    # elif file_format=='Excel':
+    #     # execute the query and create a DataFrame
+    #     df = pd.read_sql(query, cnxn)
+    #     # create an Excel file from the DataFrame
+    #     excel_file = io.BytesIO()
+    #     writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
+    #     df.to_excel(writer, sheet_name='Sheet1', index=False)
+    #     writer.save()
+    #     excel_file.seek(0)
+    #     return excel_file
+    # else:
+    #     df = pd.read_sql(query, cnxn)
+    #     return df
     cnxn.close()
-
