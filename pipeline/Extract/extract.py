@@ -194,7 +194,18 @@ def extract_main(path):
     s = requests.Session()
     s.headers.update(headers)
     initialPage()
+    for i in PROCESSED:
+        try:
+            airports.remove(i)
+        except ValueError:
+            pass
+    print(airports)
+    for airport in airports:
+        
+        queryASPX(airport)
+        PROCESSED.append(airport)
     
 if __name__ == "__main__":
+    PROCESSED = []
     PATH = '../../data/pipeline_data'
     extract_main(PATH)
