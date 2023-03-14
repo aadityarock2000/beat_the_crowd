@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=bad-continuation, invalid-name, no-member
 """
 Created on Sun Mar 12 19:50:09 2023
 
@@ -6,9 +7,11 @@ Created on Sun Mar 12 19:50:09 2023
 """
 
 import pandas as pd
+#import plotly as p
 import plotly.express as px
 import plotly.io as pio
 import plotly.graph_objects as go
+#import numpy as np
 pio.templates.default = "plotly_dark"
 
 def create_table():
@@ -20,7 +23,7 @@ def create_table():
 
     # We'll load in our Delay dataset
 
-    delays = pd.read_csv('analysis\\raw_data\\Airline_Delay_Cause_2003_2022.csv')
+    delays = pd.read_csv('..\\raw_data\\Airline_Delay_Cause_2003_2022.csv')
 
     delays = delays[delays['airport'] == 'SEA']
 
@@ -32,9 +35,11 @@ def create_table():
     delays['nas_cause'] = round((delays['nas_ct']/delays['arr_del15'])*100, 4)
     delays['security_cause'] = round((delays['security_ct']/delays['arr_del15'])*100, 4)
     delays['late_aircraft_cause'] = round((delays['late_aircraft_ct']/delays['arr_del15'])*100, 4)
-    delays['perc_total_delays'] = round((delays['arr_del15']/delays['arr_flights']),4)
+    delays['perc_total_delays'] = round((delays['arr_del15']/delays['arr_flights']), 4)
 
-    return(delays) # pylint: disable=superfluous-parens
+    return delays
+
+
 
 def create_delay_ranking():
     """ This function serves to create a table ranking each
@@ -50,22 +55,22 @@ def create_delay_ranking():
     test = test.groupby(['carrier_name']).mean().reset_index()
     test['Delay Rank'] = test['perc_total_delays'].rank(ascending=False)
     test = test.loc[:, ['carrier_name', 'perc_total_delays',
-                        'Delay Rank']].sort_values('Delay Rank', ascending = True)
+                        'Delay Rank']].sort_values('Delay Rank', ascending=True)
     test['perc_total_delays'] = round(test['perc_total_delays']*100,
-                                 4)
-    test = test.rename(columns = {'carrier_name' : 'Carrier',
-                              'perc_total_delays' : 'Percent of Total Delays (%)',
-                             'Delay Rank' : 'Rank'})
+                                      4)
+    test = test.rename(columns={'carrier_name' : 'Carrier',
+                                'perc_total_delays' : 'Percent of Total Delays (%)',
+                                'Delay Rank' : 'Rank'})
     fig = go.Figure(data=[go.Table(
-            header=dict(values=list(test.columns),
-                        #fill_color='paleturquoise',
-                        align='left'),
-                        cells=dict(values=[test.Carrier,
-                                           test['Percent of Total Delays (%)'], test.Rank],                                
-                        align='left')),
-                        ])
+        header=dict(values=list(test.columns),
+                    #fill_color='paleturquoise',
+                    align='left'), cells=dict(values=[test.Carrier,
+                                                      test['Percent of Total Delays (%)'],
+                                                      test.Rank],
+                                              align='left')),
+                         ])
     fig.update_layout(title='Ranking of Airline Carriers by Delay (2003 - 2022)')
-    return(fig) # pylint: disable=superfluous-parens
+    return fig
 
 def create_delay_ct_breakdown():
     """This function will serve to create a pie chart
@@ -82,34 +87,34 @@ def create_delay_ct_breakdown():
                               'carrier_cause', 'weather_cause', 'nas_cause',
                               'security_cause', 'late_aircraft_cause', 'perc_total_delays'], axis=1)
 
-    pie_delays = pie_delays.rename(columns = {'carrier_ct' : 'Air Carrier Delay',
-                                              'weather_ct' : 'Weather Delay',
-                                              'nas_ct' : 'National Aviation System Delay',
-                                              'security_ct' : 'Security Delay',
-                                              'late_aircraft_ct' : 'Aircraft Arriving Late'})
+    pie_delays = pie_delays.rename(columns={'carrier_ct' : 'Air Carrier Delay',
+                                            'weather_ct' : 'Weather Delay',
+                                            'nas_ct' : 'National Aviation System Delay',
+                                            'security_ct' : 'Security Delay',
+                                            'late_aircraft_ct' : 'Aircraft Arriving Late'})
 
     delays_reshape = pd.melt(pie_delays,
-                             id_vars = ['year'],
+                             id_vars=['year'],
                              value_vars=['Air Carrier Delay',
                                          'Weather Delay', 'National Aviation System Delay',
                                          'Security Delay', 'Aircraft Arriving Late'])
 
-    delays_reshape = delays_reshape[['year',
+    df = delays_reshape[['year',
                          'variable',
                          'value']].set_index(['year', 'variable'])['value']
 
     figs = {
-            c: px.pie(delays_reshape.loc[c].reset_index(), values="value", names="variable",
-                      labels = {'value':'Total Passengers',
-                                'variable':'Delay Cause'
-                                },
-                                title='Cause of Delay by Year',
-                                color_discrete_sequence=px.colors.qualitative.Dark24).update_traces(
-                                        name=c, visible=False)
-            for c in delays_reshape.index.get_level_values("year").unique()
-            }
+        c: px.pie(df.loc[c].reset_index(), values="value", names="variable",
+                  labels={'value':'Total Passengers',
+                          'variable':'Delay Cause'
+                         },
+                  title='Cause of Delay by Year',
+                  color_discrete_sequence=px.colors.qualitative.Dark24).update_traces(
+                      name=c, visible=False)
+        for c in df.index.get_level_values("year").unique()
+    }
     # integrate figures per category into one figure
-    defaultcat = delays_reshape.index.get_level_values("year").unique()[0]
+    defaultcat = df.index.get_level_values("year").unique()[0]
     fig = figs[defaultcat].update_traces(visible=True)
     for k in figs.keys():
         if k != defaultcat:
@@ -117,16 +122,23 @@ def create_delay_ct_breakdown():
 
     # finally build dropdown menu
     fig.update_layout(
-            updatemenus=[
-                    {"buttons": [{"label": k,"method": "update","args": [
-                            {"visible": [kk == k for kk in figs.keys()]},
-                                {"title":go.layout.xaxis.Title(
-                                text=f"Cause of Delay by Year <br><sup>{k} </sup>")}],
+        updatemenus=[
+            {
+                "buttons": [
+                    {
+                        "label": k,
+                        "method": "update",
+                        # list comprehension for which traces are visible
+                        "args": [{"visible": [kk == k for kk in figs.keys()]},
+                                 {"title":go.layout.xaxis.Title(
+                                     text=f"Cause of Delay by Year <br><sup>{k} </sup>"
+                                )}],
     }
-    for k in figs.keys()
+                    for k in figs.keys()
     ]}])
 
-    return(fig) # pylint: disable=superfluous-parens
+    return fig
+
 
 def create_delay_min_breakdown():
     """This function will serve to create a pie chart
@@ -142,37 +154,37 @@ def create_delay_min_breakdown():
                               'nas_ct', 'security_ct', 'late_aircraft_ct',
                               'carrier_cause', 'weather_cause', 'nas_cause',
                               'security_cause', 'late_aircraft_cause', 'perc_total_delays'],
-                                axis=1)
+                             axis=1)
 
-    pie_delays = pie_delays.rename(columns = {'carrier_delay' : 'Air Carrier Delay',
-                                              'weather_delay' : 'Weather Delay',
-                                              'nas_delay' : 'National Aviation System Delay',
-                                              'security_delay' : 'Security Delay',
-                                              'late_aircraft_delay' : 'Aircraft Arriving Late'})
+    pie_delays = pie_delays.rename(columns={'carrier_delay' : 'Air Carrier Delay',
+                                            'weather_delay' : 'Weather Delay',
+                                            'nas_delay' : 'National Aviation System Delay',
+                                            'security_delay' : 'Security Delay',
+                                            'late_aircraft_delay' : 'Aircraft Arriving Late'})
 
     delays_reshape = pd.melt(pie_delays,
-                             id_vars = ['year'],
+                             id_vars=['year'],
                              value_vars=['Air Carrier Delay',
                                          'Weather Delay', 'National Aviation System Delay',
                                          'Security Delay', 'Aircraft Arriving Late'])
 
-    delays_reshape = delays_reshape[['year',
+    df = delays_reshape[['year',
                          'variable',
                          'value']].set_index(['year', 'variable'])['value']
 
 
     figs = {
-            c: px.pie(delays_reshape.loc[c].reset_index(), values="value", names="variable",
-                      labels = {'value':'Total Passengers',
-                                'variable':'Delay Cause'
-                                },
-                                title='Cause of Delay by Year (in minutes)',
-                                color_discrete_sequence=px.colors.qualitative.Dark24).update_traces(
-                                        name=c, visible=False)
-            for c in delays_reshape.index.get_level_values("year").unique()
-            }
+        c: px.pie(df.loc[c].reset_index(), values="value", names="variable",
+                  labels={'value':'Total Passengers',
+                          'variable':'Delay Cause'
+                          },
+                  title='Cause of Delay by Year (in minutes)',
+                  color_discrete_sequence=px.colors.qualitative.Dark24).update_traces(
+                      name=c, visible=False)
+        for c in df.index.get_level_values("year").unique()
+        }
     # integrate figures per category into one figure
-    defaultcat = delays_reshape.index.get_level_values("year").unique()[0]
+    defaultcat = df.index.get_level_values("year").unique()[0]
     fig = figs[defaultcat].update_traces(visible=True)
     for k in figs.keys():
         if k != defaultcat:
@@ -180,17 +192,22 @@ def create_delay_min_breakdown():
 
     # finally build dropdown menu
     fig.update_layout(
-            updatemenus=[{"buttons":
-                    [{"label": k,"method": "update",#list comprehension for which traces are visible
-                      "args": [{"visible": [kk == k for kk in figs.keys()]},
-                               {"title":go.layout.xaxis.Title(
-                                       text=f"Cause of Delay by Year <br><sup>{k} </sup>"
-                                                                          )}],
-    }
-    for k in figs.keys()
-    ]}])
+        updatemenus=[
+            {
+                "buttons": [
+                    {
+                        "label": k,
+                        "method": "update",
+                        # list comprehension for which traces are visible
+                        "args": [{"visible": [kk == k for kk in figs.keys()]},
+                                 {"title":go.layout.xaxis.Title(
+                                     text=f"Cause of Delay by Year <br><sup>{k} </sup>"
+                                          )}],
+                                    }
+                    for k in figs.keys()]}])
 
-    return(fig) # pylint: disable=superfluous-parens
+    return fig
+
 
 def pct_delays_by_carrier():
     """ This function will serve to create a bar graph
@@ -205,10 +222,10 @@ def pct_delays_by_carrier():
                  labels={"carrier_name": "Airline Carrier",
                          "perc_total_delays":"Percent of Delays",
                          },
-                         title="Percentage of Delays by Carrier",
-                         color_discrete_sequence=px.colors.qualitative.Alphabet_r)
+                 title="Percentage of Delays by Carrier",
+                 color_discrete_sequence=px.colors.qualitative.Alphabet_r)
 
-    fig.update_xaxes(tickangle = 45)
+    fig.update_xaxes(tickangle=45)
 
-    return(fig) # pylint: disable=superfluous-parens
-        
+    return fig
+    
