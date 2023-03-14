@@ -12,22 +12,34 @@ file_types: Returns the list of file types availiable
 import pandas as pd
 
 
-def airport_list():
+def airport_list(path):
     '''
     Returns the list of airports that are in the reference files for airports_list.txt
     '''
-    airport_code_reference=pd.read_csv('website_utils/reference_data/airport_codes_reference.csv')
-    airports=['All']+list(airport_code_reference['Airport_name'])
+
+    try:
+        airport_code_reference = pd.read_csv(path)
+    except pd.errors.EmptyDataError:
+        # Handle the edge case of reading an empty file
+        return ['All']
+
+    airports = ['All'] + list(airport_code_reference['Airport_name'])
     return airports
 
-def carrier_list():
+def carrier_list(file):
     '''
     Returns the list of air carriers that are in the reference files for carriers_list.txt
     '''
-    file='website_utils/reference_data/airport_carrier_codes_reference.csv'
-    airport_carrier_codes_reference=pd.read_csv(file)
-    carriers=['All']+list(airport_carrier_codes_reference['Carrier_name'])
-    return carriers
+    try:
+        airport_carrier_codes_reference = pd.read_csv(file)
+    except pd.errors.EmptyDataError:
+        return ['All']
+    except FileNotFoundError as exc:
+        raise FileNotFoundError("The file '" + file + "' could not be found.") from exc
+
+
+    carrier_lists=['All']+list(airport_carrier_codes_reference['Carrier_name'])
+    return carrier_lists
 
 def file_types():
     '''
@@ -37,4 +49,4 @@ def file_types():
     return types
 
 if __name__=='__main__':
-    print('in the departure_input_delay function')
+    print('Hello')
