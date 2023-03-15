@@ -340,3 +340,117 @@ DEBUG:root:Ran into a problem for : BFI & UA : Code : 500
 DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 188624
 DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
 DEBUG:root:Ran into a problem for : BFI & VX : Code : 500
+DEBUG:root:### Inside Initial Call
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transtats.bts.gov:443
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "GET /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:root:### Inside Master Call
+DEBUG:root:### Outside Master Call
+DEBUG:root:### Outside Initial Call
+DEBUG:root:### Inside Initial Call
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transtats.bts.gov:443
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "GET /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:root:### Inside Master Call
+DEBUG:root:### Outside Master Call
+DEBUG:root:### Outside Initial Call
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & TZ : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & FL : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & AS : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & G4 : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & AQ : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & HP : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & AA : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & MQ : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & DH : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & EV : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & OH (1) : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:root:--------> Found data for CO
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & DL : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & 9E : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & MQ : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & EV : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & XE : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & EV : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & F9 : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & HA : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & QX : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & DH : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & B6 : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & YV : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & NW : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & OH : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & 9E : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & YX : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & OO : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & WN : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & NK : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & US : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & UA : Code : 500
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://www.transtats.bts.gov:443 "POST /ontime/departures.aspx HTTP/1.1" 500 7626
+DEBUG:root:Ran into a problem for : BFI & VX : Code : 500

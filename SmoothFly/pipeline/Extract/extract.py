@@ -204,10 +204,14 @@ def initial_page(session):
     else:
         session.headers.update(HEADERS)
         logging.debug('### Inside Initial Call')
-        response = session.get(URL, headers=HEADERS, verify=False)
-        get_master_data(response)
-        logging.debug('### Outside Initial Call')
-        return response
+        try:
+            response = session.get(URL, headers=HEADERS, verify=False)
+            get_master_data(response)
+            logging.debug('### Outside Initial Call')
+            return response
+        except requests.exceptions.ConnectTimeout as exc:
+            raise requests.exceptions.ConnectTimeout from exc
+        
 
 
 def get_airport_csv(session):
@@ -219,16 +223,19 @@ def get_airport_csv(session):
     Returns:
         requests.Response: Response object from the post request to download the CSV.
     """
-    if DATA is None or DATA['__VIEWSTATE'] == '':
-        return None
-    DATA['__EVENTTARGET'] = 'DL_CSV'
-    DATA['__EVENTARGUMENT'] = ''
-    del DATA['btnSubmit']
-    response = session.post(URL, headers=HEADERS, data=DATA, verify=False)
-    DATA['__EVENTTARGET'] = ''
-    DATA['__EVENTARGUMENT'] = ''
-    DATA['btnSubmit'] = 'Submit'
-    return response
+    try:
+        if DATA is None or DATA['__VIEWSTATE'] == '':
+            return None
+        DATA['__EVENTTARGET'] = 'DL_CSV'
+        DATA['__EVENTARGUMENT'] = ''
+        del DATA['btnSubmit']
+        response = session.post(URL, headers=HEADERS, data=DATA, verify=False)
+        DATA['__EVENTTARGET'] = ''
+        DATA['__EVENTARGUMENT'] = ''
+        DATA['btnSubmit'] = 'Submit'
+        return response
+    except requests.exceptions.ConnectTimeout as exc:
+            raise requests.exceptions.ConnectTimeout from exc
 
 
 def query_aspx(airport, path, session):
@@ -246,22 +253,25 @@ def query_aspx(airport, path, session):
     DATA['cboAirport'] = airport
     for airline in AIRLINES:
         DATA['cboAirline'] = airline
-        response = session.post(URL, headers=HEADERS, data=DATA, verify=False)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        update_state(soup)
-        airport_csv = get_airport_csv(session)
-        if airport_csv.status_code == 200:
-            logging.debug('--------> Found data for %s', airline)
-            airport_csv = airport_csv.content
-            with open(path+'/'+airport+'.csv', 'ba') as file:
-                start = airport_csv.find(b'\n\n')
-                airport_csv = airport_csv[start+1:]
-                end = airport_csv.find(b'\n\n')
-                airport_csv = airport_csv[:end]
-                file.write(airport_csv)
-        else:
-            logging.debug('Ran into a problem for : %s & %s : Code : %s',
-                          airport, airline, str(airport_csv.status_code))
+        try:
+            response = session.post(URL, headers=HEADERS, data=DATA, verify=False)
+            soup = BeautifulSoup(response.content, 'html.parser')
+            update_state(soup)
+            airport_csv = get_airport_csv(session)
+            if airport_csv.status_code == 200:
+                logging.debug('--------> Found data for %s', airline)
+                airport_csv = airport_csv.content
+                with open(path+'/'+airport+'.csv', 'ba') as file:
+                    start = airport_csv.find(b'\n\n')
+                    airport_csv = airport_csv[start+1:]
+                    end = airport_csv.find(b'\n\n')
+                    airport_csv = airport_csv[:end]
+                    file.write(airport_csv)
+            else:
+                logging.debug('Ran into a problem for : %s & %s : Code : %s',
+                            airport, airline, str(airport_csv.status_code))
+        except requests.exceptions.ConnectTimeout as exc:
+            raise requests.exceptions.ConnectTimeout from exc
 
 
 def extract_main(path):
