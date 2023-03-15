@@ -1,23 +1,13 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
-name: connectivity
+name: Connectivity
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+  workflow_dispatch:
 
 jobs:
-  build:
-
+  ping:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Check network connectivity
-      run: ping google.com
-
+    - name: Ping
+      uses: actions-ecosystem/actions-ping@v2.0.0
+      with:
+        url: 'https://www.google.com'
