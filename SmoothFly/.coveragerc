@@ -2,5 +2,6 @@
 omit =  
     *__init__*
     *tests*
+    *pipeline/Extract/extract.py*
 exclude_lines =
     if __name__ == .__main__.:

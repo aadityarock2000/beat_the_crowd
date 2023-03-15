@@ -12,15 +12,17 @@ import unittest
 import pandas as pd
 from pandas.testing import assert_frame_equal
 #pylint: disable=wrong-import-position
-sys.path.append("../Process")
-from processing import process_csv, processing_main
+sys.path.append("pipeline/Process")
+import processing
 #pylint: disable=wrong-import-position
 
-"""
-Class:
-    TestProcessCSV
 
-Functions :
+class TestProcessCSV(unittest.TestCase):
+
+    """
+    Class:
+        TestProcessCSV
+    Functions :
     - test_one_shot(): This test case tests the function using a non-empty dataframe as input.
     It checks if the returned dataframe is equal to the expected dataframe and has the expected
     number of rows.
@@ -31,8 +33,7 @@ Functions :
     - test_edge_one_row(): This test case tests the function using a dataframe with only one row as
     input. It checks if the returned dataframe has the expected number of rows and is of type
     pandas DataFrame.
-"""
-class TestProcessCSV(unittest.TestCase):
+    """
 
     def setUp(self):
         """
@@ -86,7 +87,7 @@ class TestProcessCSV(unittest.TestCase):
         Compares the output dataframe with an expected dataframe to ensure that the 
         function processes the data correctly.
         """
-        result = process_csv('test.csv', self.csv_data)
+        result = processing.process_csv('test.csv', self.csv_data)
         assert_frame_equal(result, self.expected_data)
         self.assertEqual(len(result), 3)
 
@@ -96,7 +97,7 @@ class TestProcessCSV(unittest.TestCase):
         returns an empty dataframe.
         """
         data_frame = pd.DataFrame()
-        result = process_csv('empty_data.csv', data_frame)
+        result = processing.process_csv('empty_data.csv', data_frame)
         self.assertIsInstance(result, pd.DataFrame)
         self.assertEqual(len(result), 0)
 
@@ -105,8 +106,8 @@ class TestProcessCSV(unittest.TestCase):
         Test the process_csv function with a dataframe containing only headers. 
         Assert that the function returns an empty dataframe.
         """
-        data_frame = pd.read_csv('Test_Suite/Header_only.csv')
-        result = process_csv('Header_only.csv', data_frame)
+        data_frame = pd.read_csv('pipeline/Tests/Test_Suite/Header_only.csv')
+        result = processing.process_csv('Header_only.csv', data_frame)
         self.assertIsInstance(result, pd.DataFrame)
         self.assertEqual(len(result), 0)
 
@@ -116,15 +117,17 @@ class TestProcessCSV(unittest.TestCase):
         Compares the output dataframe with an expected dataframe to ensure that the 
         function processes the data correctly.
         """
-        result = process_csv('test.csv', self.csv_data)
+        result = processing.process_csv('test.csv', self.csv_data)
         self.assertIsInstance(result, pd.DataFrame)
         self.assertEqual(len(result), 3)
 
-"""
-Class:
-    TestProcessingMain
+class TestProcessingMain(unittest.TestCase):
 
-Functions :
+    """
+    Class:
+        TestProcessingMain
+
+    Functions :
     - test_processing_main_smoke : Smoke test for processing_main function. 
     Test that processing_main function can be called without errors on an empty directory.
     - test_processing_main_one_shot : Test case for processing_main() with a single input CSV file. 
@@ -134,9 +137,8 @@ Functions :
     - test_processing_main_edge : Test case for processing_main() with an input file that is not 
     a CSV. The test case creates a non-CSV file in a temporary directory, runs processing_main() 
     on it, and verifies that the file is not modified. Finally, the temporary file is deleted.
-"""
+    """
 
-class TestProcessingMain(unittest.TestCase):
     def test_processing_main_smoke(self):
         """
         Smoke test for processing_main function.
@@ -144,8 +146,8 @@ class TestProcessingMain(unittest.TestCase):
         Raises:
             AssertionError: If the test fails.
         """
-        test_dir = "Empty"
-        processing_main(test_dir)
+        test_dir = "pipeline/Tests/Empty"
+        processing.processing_main(test_dir)
 
     def test_processing_main_one_shot(self):
         """
@@ -157,7 +159,7 @@ class TestProcessingMain(unittest.TestCase):
             AssertionError: If the output file does not have the expected columns or rows, 
             or if the temporary file was not deleted.
         """
-        test_dir = "Test_Suite"
+        test_dir = "pipeline/Tests/Test_Suite"
         file_name = "test.csv"
         csv_data = pd.DataFrame({
             'Destination Airport': ['LAX', 'ORD', 'SFO'],
@@ -179,7 +181,7 @@ class TestProcessingMain(unittest.TestCase):
             'Delay Late Aircraft Arrival (Minutes)': [0, 0, 0]
         })
         csv_data.to_csv(test_dir + '/' + file_name, index=False)
-        processing_main(test_dir)
+        processing.processing_main(test_dir)
         processed_data = pd.read_csv(test_dir + '/' + file_name)
         print(len(processed_data))
         assert len(processed_data.columns) == 18
@@ -200,11 +202,11 @@ class TestProcessingMain(unittest.TestCase):
             AssertionError: If the file is modified or the temporary file was not deleted.
 
         """
-        test_dir = "Test_Suite"
+        test_dir = "pipeline/Tests/Test_Suite"
         file_name = "test.txt"
         with open(test_dir + '/' + file_name, "w",encoding='utf-8') as file:
             file.write("Test file")
-        processing_main(test_dir)
+        processing.processing_main(test_dir)
         assert os.path.isfile(test_dir + '/' + file_name)  # non-CSV file should not be modified
 
 if __name__ == '__main__':

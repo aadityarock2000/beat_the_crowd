@@ -1,5 +1,6 @@
 """
-    The module collects data on flight departures and logs them into a file. It uses the requests and BeautifulSoup libraries for web scraping and logging library for logging.
+    The module collects data on flight departures and logs them into a file. It uses the requests 
+    and BeautifulSoup libraries for web scraping and logging library for logging.
 
     It defines the following global variables:
 
@@ -28,8 +29,8 @@ logging.basicConfig(filename='data-collection.log',
 
 URL = 'https://www.transtats.bts.gov/ontime/departures.aspx'
 HEADERS = {'User-Agent':
-           '''Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
-      Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.50'''}
+           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+           +'Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.50'}
 AIRPORTS = []
 AIRLINES = []
 DATA = {
@@ -144,6 +145,8 @@ def update_state(soup):
     Returns:
         None.
     """
+    if soup is None:
+        return None
     DATA['__VIEWSTATE'] = soup.find(
         'input', attrs={'id': '__VIEWSTATE'})['value']
     DATA['__VIEWSTATEGENERATOR'] = soup.find(
@@ -163,6 +166,10 @@ def get_master_data(response):
     Raises:
         None.
     """
+
+    if response is None:
+        return None
+
     logging.debug('### Inside Master Call')
     AIRLINES.clear()
     AIRPORTS.clear()
@@ -192,10 +199,19 @@ def initial_page(session):
     Returns:
         None.
     """
-    logging.debug('### Inside Initial Call')
-    response = session.get(URL, headers=HEADERS, verify=False)
-    get_master_data(response)
-    logging.debug('### Outside Initial Call')
+    if session is None or HEADERS is None:
+        return None
+    else:
+        session.headers.update(HEADERS)
+        logging.debug('### Inside Initial Call')
+        try:
+            response = session.get(URL, headers=HEADERS, verify=False)
+            get_master_data(response)
+            logging.debug('### Outside Initial Call')
+            return response
+        except requests.exceptions.ConnectTimeout as exc:
+            raise requests.exceptions.ConnectTimeout from exc
+        
 
 
 def get_airport_csv(session):
@@ -207,14 +223,19 @@ def get_airport_csv(session):
     Returns:
         requests.Response: Response object from the post request to download the CSV.
     """
-    DATA['__EVENTTARGET'] = 'DL_CSV'
-    DATA['__EVENTARGUMENT'] = ''
-    del DATA['btnSubmit']
-    response = session.post(URL, headers=HEADERS, data=DATA, verify=False)
-    DATA['__EVENTTARGET'] = ''
-    DATA['__EVENTARGUMENT'] = ''
-    DATA['btnSubmit'] = 'Submit'
-    return response
+    try:
+        if DATA is None or DATA['__VIEWSTATE'] == '':
+            return None
+        DATA['__EVENTTARGET'] = 'DL_CSV'
+        DATA['__EVENTARGUMENT'] = ''
+        del DATA['btnSubmit']
+        response = session.post(URL, headers=HEADERS, data=DATA, verify=False)
+        DATA['__EVENTTARGET'] = ''
+        DATA['__EVENTARGUMENT'] = ''
+        DATA['btnSubmit'] = 'Submit'
+        return response
+    except requests.exceptions.ConnectTimeout as exc:
+            raise requests.exceptions.ConnectTimeout from exc
 
 
 def query_aspx(airport, path, session):
@@ -227,25 +248,30 @@ def query_aspx(airport, path, session):
     Returns:
         None.
     """
+    if DATA is None:
+        return None
     DATA['cboAirport'] = airport
     for airline in AIRLINES:
         DATA['cboAirline'] = airline
-        response = session.post(URL, headers=HEADERS, data=DATA, verify=False)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        update_state(soup)
-        airport_csv = get_airport_csv(session)
-        if airport_csv.status_code == 200:
-            logging.debug('--------> Found data for %s', airline)
-            airport_csv = airport_csv.content
-            with open(path+'/'+airport+'.csv', 'ba') as file:
-                start = airport_csv.find(b'\n\n')
-                airport_csv = airport_csv[start+1:]
-                end = airport_csv.find(b'\n\n')
-                airport_csv = airport_csv[:end]
-                file.write(airport_csv)
-        else:
-            logging.debug('Ran into a problem for : %s & %s : Code : %s',
-                          airport, airline, str(airport_csv.status_code))
+        try:
+            response = session.post(URL, headers=HEADERS, data=DATA, verify=False)
+            soup = BeautifulSoup(response.content, 'html.parser')
+            update_state(soup)
+            airport_csv = get_airport_csv(session)
+            if airport_csv.status_code == 200:
+                logging.debug('--------> Found data for %s', airline)
+                airport_csv = airport_csv.content
+                with open(path+'/'+airport+'.csv', 'ba') as file:
+                    start = airport_csv.find(b'\n\n')
+                    airport_csv = airport_csv[start+1:]
+                    end = airport_csv.find(b'\n\n')
+                    airport_csv = airport_csv[:end]
+                    file.write(airport_csv)
+            else:
+                logging.debug('Ran into a problem for : %s & %s : Code : %s',
+                            airport, airline, str(airport_csv.status_code))
+        except requests.exceptions.ConnectTimeout as exc:
+            raise requests.exceptions.ConnectTimeout from exc
 
 
 def extract_main(path):
@@ -253,11 +279,12 @@ def extract_main(path):
     Extracts data for all airports and saves it in a CSV file.
     Arguments:
         path (str): The path where the CSV files will be saved.
+        nums (int): Added for testing. Since this method loads all the data from the website.
+        nums will determine the number of airports to cover
     Returns:
         None.
     """
     session = requests.Session()
-    session.headers.update(HEADERS)
     initial_page(session)
     for i in PROCESSED:
         try:
@@ -270,8 +297,9 @@ def extract_main(path):
         query_aspx(airport, path,session)
         PROCESSED.append(airport)
 
+    session.close()
 
 if __name__ == "__main__":
     PROCESSED = []
-    PATH = '../../data/pipeline_data'
+    PATH = 'data/pipeline_data'
     extract_main(PATH)

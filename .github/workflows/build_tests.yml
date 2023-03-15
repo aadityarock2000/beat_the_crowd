@@ -91,7 +91,7 @@ jobs:
       # Next step: run pylint. Anything less than 10/10 will fail.
       - name: Lint with pylint
         run: |
-          pylint SmoothFly/analysis/*.py
+          pylint SmoothFly/**/*.py
 
       - name: Lint with whitelisting
         run: |

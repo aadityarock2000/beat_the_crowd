@@ -120,5 +120,5 @@ def processing_main(path):
                 csv.to_csv(path+'/'+file, index=False)
 
 if __name__ == "__main__":
-    PATH = '../../data/pipeline_data'
+    PATH = 'data/pipeline_data'
     processing_main(PATH)
