@@ -1,0 +1,13 @@
+name: Connectivity
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Ping
+      uses: actions-ecosystem/actions-ping@v2.0.0
+      with:
+        url: 'https://www.google.com'
