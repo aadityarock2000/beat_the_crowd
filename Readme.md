@@ -42,3 +42,4 @@ The project needs the user to have Microsoft SQL server in their machine where t
 5. In the sql_parsing.py file in `SmoothFly/website_utils` path, edit the `connect_sql_server()` method, by adding in your server name.
 6. Rerun using `streamlit run app.py` to look at the updated website, with the functionality to access the pipeline.
 
+Demo Link: https://drive.google.com/file/d/1h34JMwNn3Rb8nDR5FT85ysa6hXSOF8ay/view?usp=share_link
