@@ -5,7 +5,7 @@ The project needs the user to have Microsoft SQL server in their machine where t
 
 **Steps:**
 1. Clone the repository
-2. In the root folder, run the following commands to set the project. <br> 
+2. In the root folder, run the following commands to set up the project. <br> 
 Windows:<br> 
 py -m pip install --upgrade build<br> 
 py -m build<br> 
