@@ -145,14 +145,13 @@ def update_state(soup):
     Returns:
         None.
     """
-    if soup is None:
-        return None
-    DATA['__VIEWSTATE'] = soup.find(
-        'input', attrs={'id': '__VIEWSTATE'})['value']
-    DATA['__VIEWSTATEGENERATOR'] = soup.find(
-        'input', attrs={'id': '__VIEWSTATEGENERATOR'})['value']
-    DATA['__EVENTVALIDATION'] = soup.find(
-        'input', attrs={'id': '__EVENTVALIDATION'})['value']
+    if soup is not None:
+        DATA['__VIEWSTATE'] = soup.find(
+            'input', attrs={'id': '__VIEWSTATE'})['value']
+        DATA['__VIEWSTATEGENERATOR'] = soup.find(
+            'input', attrs={'id': '__VIEWSTATEGENERATOR'})['value']
+        DATA['__EVENTVALIDATION'] = soup.find(
+            'input', attrs={'id': '__EVENTVALIDATION'})['value']
 
 
 def get_master_data(response):
@@ -167,27 +166,27 @@ def get_master_data(response):
         None.
     """
 
-    if response is None:
-        return None
+    if response is not None:
+        logging.debug('### Inside Master Call')
+        AIRLINES.clear()
+        AIRPORTS.clear()
 
-    logging.debug('### Inside Master Call')
-    AIRLINES.clear()
-    AIRPORTS.clear()
+        soup = BeautifulSoup(response.content, 'html.parser')
+        update_state(soup)
 
-    soup = BeautifulSoup(response.content, 'html.parser')
-    update_state(soup)
+        airport_list = soup.findAll('select', attrs={'id': 'cboAirport',
+                                                     'name': 'cboAirport'})[0].\
+            findAll('option')
+        for air in airport_list:
+            AIRPORTS.append(air['value'])
 
-    airport_list = soup.findAll('select', attrs={'id': 'cboAirport', 'name': 'cboAirport'})[0].\
-        findAll('option')
-    for air in airport_list:
-        AIRPORTS.append(air['value'])
+        airlines_list = soup.findAll('select', attrs={'id': 'cboAirline',
+                                                      'name': 'cboAirline'})[0].\
+            findAll('option')
+        for air in airlines_list:
+            AIRLINES.append(air['value'])
 
-    airlines_list = soup.findAll('select', attrs={'id': 'cboAirline', 'name': 'cboAirline'})[0].\
-        findAll('option')
-    for air in airlines_list:
-        AIRLINES.append(air['value'])
-
-    logging.debug('### Outside Master Call')
+        logging.debug('### Outside Master Call')
 
 
 def initial_page(session):
@@ -201,17 +200,16 @@ def initial_page(session):
     """
     if session is None or HEADERS is None:
         return None
-    else:
-        session.headers.update(HEADERS)
-        logging.debug('### Inside Initial Call')
-        try:
-            response = session.get(URL, headers=HEADERS, verify=False)
-            get_master_data(response)
-            logging.debug('### Outside Initial Call')
-            return response
-        except requests.exceptions.ConnectTimeout as exc:
-            raise requests.exceptions.ConnectTimeout from exc
-        
+
+    session.headers.update(HEADERS)
+    logging.debug('### Inside Initial Call')
+    try:
+        response = session.get(URL, headers=HEADERS, verify=False)
+        get_master_data(response)
+        logging.debug('### Outside Initial Call')
+        return response
+    except requests.exceptions.ConnectTimeout as exc:
+        raise requests.exceptions.ConnectTimeout from exc
 
 
 def get_airport_csv(session):
@@ -235,7 +233,7 @@ def get_airport_csv(session):
         DATA['btnSubmit'] = 'Submit'
         return response
     except requests.exceptions.ConnectTimeout as exc:
-            raise requests.exceptions.ConnectTimeout from exc
+        raise requests.exceptions.ConnectTimeout from exc
 
 
 def query_aspx(airport, path, session):
@@ -248,8 +246,8 @@ def query_aspx(airport, path, session):
     Returns:
         None.
     """
-    if DATA is None:
-        return None
+    if DATA is None or DATA['__VIEWSTATE'] == '':
+        return
     DATA['cboAirport'] = airport
     for airline in AIRLINES:
         DATA['cboAirline'] = airline
