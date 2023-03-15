@@ -106,7 +106,7 @@ class TestProcessCSV(unittest.TestCase):
         Test the process_csv function with a dataframe containing only headers. 
         Assert that the function returns an empty dataframe.
         """
-        data_frame = pd.read_csv('Test_Suite/Header_only.csv')
+        data_frame = pd.read_csv('pipeline/Tests/Test_Suite/Header_only.csv')
         result = processing.process_csv('Header_only.csv', data_frame)
         self.assertIsInstance(result, pd.DataFrame)
         self.assertEqual(len(result), 0)
@@ -146,8 +146,8 @@ class TestProcessingMain(unittest.TestCase):
         Raises:
             AssertionError: If the test fails.
         """
-        test_dir = "Empty"
-        processing_main(test_dir)
+        test_dir = "pipeline/Tests/Empty"
+        processing.processing_main(test_dir)
 
     def test_processing_main_one_shot(self):
         """
@@ -159,7 +159,7 @@ class TestProcessingMain(unittest.TestCase):
             AssertionError: If the output file does not have the expected columns or rows, 
             or if the temporary file was not deleted.
         """
-        test_dir = "Test_Suite"
+        test_dir = "pipeline/Tests/Test_Suite"
         file_name = "test.csv"
         csv_data = pd.DataFrame({
             'Destination Airport': ['LAX', 'ORD', 'SFO'],
@@ -181,7 +181,7 @@ class TestProcessingMain(unittest.TestCase):
             'Delay Late Aircraft Arrival (Minutes)': [0, 0, 0]
         })
         csv_data.to_csv(test_dir + '/' + file_name, index=False)
-        processing_main(test_dir)
+        processing.processing_main(test_dir)
         processed_data = pd.read_csv(test_dir + '/' + file_name)
         print(len(processed_data))
         assert len(processed_data.columns) == 18
@@ -202,11 +202,11 @@ class TestProcessingMain(unittest.TestCase):
             AssertionError: If the file is modified or the temporary file was not deleted.
 
         """
-        test_dir = "Test_Suite"
+        test_dir = "pipeline/Tests/Test_Suite"
         file_name = "test.txt"
         with open(test_dir + '/' + file_name, "w",encoding='utf-8') as file:
             file.write("Test file")
-        processing_main(test_dir)
+        processing.processing_main(test_dir)
         assert os.path.isfile(test_dir + '/' + file_name)  # non-CSV file should not be modified
 
 if __name__ == '__main__':

@@ -13,7 +13,7 @@ Classes:
 
 """
 # import sys
-import unittest
+# import unittest
 # import pytest
 # import pyodbc
 
@@ -22,7 +22,7 @@ import unittest
 # import loading
 # #pylint: disable=wrong-import-position
 
-class TestLoadCSV(unittest.TestCase):
+#class TestLoadCSV(unittest.TestCase):
 
     # Will work only when there is server locally. Commenting as we do not have SQL Server on cloud
     # or accessible via github
@@ -72,5 +72,6 @@ class TestLoadCSV(unittest.TestCase):
     #     conn = loading.get_connection()
     #     assert conn is not None
 
-if __name__ == '__main__':
-    unittest.main()
+
+# if __name__ == '__main__':
+#     unittest.main()
